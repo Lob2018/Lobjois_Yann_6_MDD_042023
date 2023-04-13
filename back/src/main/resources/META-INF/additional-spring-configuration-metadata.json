@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "mdd-api.service.local.httpserver.path",
+    "type": "java.lang.String",
+    "description": "The path to http-server to retrieve the images"
+  },
+  {
+    "name": "mdd-api.security.cors.origins",
+    "type": "java.lang.String",
+    "description": "A comma-separated list of origins for which CORS requests are allowed"
+  }
+]}
