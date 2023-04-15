@@ -23,7 +23,7 @@ public class Subject {
 	private Long id;
 
 	@NotBlank
-	@Column(name = "topic", length = 255)
+	@Column(name = "topic")
 	@Size(max = 255)
 	private String topic;
 

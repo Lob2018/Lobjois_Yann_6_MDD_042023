@@ -18,24 +18,24 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class Users {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotBlank
-	@Column(name = "email", length = 255)
+	@Column(name = "email")
 	@Size(max = 255)
 	private String email;
 
 	@NotBlank
-	@Column(name = "username", length = 255)
+	@Column(name = "username")
 	@Size(max = 255)
 	private String username;
 
 	@NotBlank
-	@Column(name = "password", length = 255)
+	@Column(name = "password")
 	@Size(max = 255)
 	private String password;
 

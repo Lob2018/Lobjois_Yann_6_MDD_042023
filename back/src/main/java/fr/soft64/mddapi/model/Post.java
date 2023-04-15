@@ -32,14 +32,14 @@ public class Post {
 
 	@ManyToOne
 	@JoinColumn(name = "author_id")
-	private User user;
+	private Users user;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "post_id")
 	List<Comment> comments = new ArrayList<>();
 
 	@NotBlank
-	@Column(name = "title", length = 255)
+	@Column(name = "title")
 	@Size(max = 255)
 	private String title;
 
@@ -68,11 +68,11 @@ public class Post {
 		this.subject = subject;
 	}
 
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 

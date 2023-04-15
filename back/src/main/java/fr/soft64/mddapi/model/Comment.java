@@ -23,7 +23,7 @@ public class Comment {
 
 	@ManyToOne
 	@JoinColumn(name = "commentator_id")
-	private User user;
+	private Users user;
 
 	@ManyToOne
 	@JoinColumn(name = "post_id")
@@ -46,11 +46,11 @@ public class Comment {
 		this.id = id;
 	}
 
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 

@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import fr.soft64.mddapi.model.User;
+import fr.soft64.mddapi.model.Users;
 import fr.soft64.mddapi.repository.UserRepository;
 
 @Service
@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public final UserDetails loadUserByUsername(final String userEmail) throws UsernameNotFoundException {
-		final Optional<User> user = userRepository.findByEmail(userEmail);
+		final Optional<Users> user = userRepository.findByEmail(userEmail);
 
 		if (user.isEmpty())
 			throw new UsernameNotFoundException(userEmail + " not found");
@@ -31,8 +31,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 				getGrantedAuthorities("ROLE_USER"));
 	}
 
-	private final List<GrantedAuthority> getGrantedAuthorities(final String role) {
-		final List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+	private List<GrantedAuthority> getGrantedAuthorities(final String role) {
+		final List<GrantedAuthority> authorities = new ArrayList<>();
 		// Spring Security automatically prefix role with ROLE_
 		// so if the role name in database isn't prefix with ROLE_
 		// we have to it

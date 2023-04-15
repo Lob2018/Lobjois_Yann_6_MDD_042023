@@ -2,6 +2,7 @@ package fr.soft64.mddapi.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.soft64.mddapi.dto.UserLoginDto;
 import fr.soft64.mddapi.dto.UserRegisterDto;
-import fr.soft64.mddapi.model.User;
+import fr.soft64.mddapi.model.Users;
 import fr.soft64.mddapi.security.JwtTokenUtil;
 import fr.soft64.mddapi.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,8 +48,8 @@ public class AuthController {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	private final User convertToEntity(final UserRegisterDto userRegisterDto) {
-		return modelMapper.map(userRegisterDto, User.class);
+	private Users convertToEntity(final UserRegisterDto userRegisterDto) {
+		return modelMapper.map(userRegisterDto, Users.class);
 	}
 
 	@PostMapping("/register")
@@ -62,19 +64,18 @@ public class AuthController {
 	 * @param user  The user credentials to register
 	 * @param token The corresponding token
 	 * @return The HTTP response
-	 * @throws MethodArgumentNotValidException Exception for invalid user name
+	 * @throws MethodArgumentNotValidException Exception for invalid username
 	 */
 	public final ResponseEntity<Object> register(@RequestBody @Valid UserRegisterDto userRegistering) {
 		final HashMap<String, String> map = new HashMap<>();
 		try {
-			final User user = convertToEntity(userRegistering);
+			final Users user = convertToEntity(userRegistering);
 			final String plainPassword = user.getPassword();
 			userService.createUser(user);
 			// Get and return the new token
 			final Authentication authenticate = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), plainPassword));
-			final org.springframework.security.core.userdetails.User autendicatedUser = (org.springframework.security.core.userdetails.User) authenticate
-					.getPrincipal();
+			final User autendicatedUser = (User) authenticate.getPrincipal();
 			final String token = jwtTokenUtil.generateAccessToken(autendicatedUser);
 			map.put("token", token);
 			return ResponseEntity.ok().body(map);
@@ -101,14 +102,10 @@ public class AuthController {
 		final HashMap<String, String> map = new HashMap<>();
 		try {
 			final String email = user.getEmail();
-			if (email.trim().length() == 0) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
-			}
 			// Get and return the new token
 			final Authentication authenticate = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(email, user.getPassword()));
-			final org.springframework.security.core.userdetails.User autendicatedUser = (org.springframework.security.core.userdetails.User) authenticate
-					.getPrincipal();
+			final User autendicatedUser = (User) authenticate.getPrincipal();
 			final String token = jwtTokenUtil.generateAccessToken(autendicatedUser);
 			map.put("token", token);
 			return ResponseEntity.ok().body(map);

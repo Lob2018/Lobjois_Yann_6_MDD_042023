@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.soft64.mddapi.configuration.SecurityConfig;
-import fr.soft64.mddapi.model.User;
+import fr.soft64.mddapi.model.Users;
 import fr.soft64.mddapi.repository.UserRepository;
 
 @Service
@@ -23,29 +23,26 @@ public class UserService {
 	private final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,254}$";
 	private final Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 
-	public final User createUser(final User user) {
+	public final Users createUser(final Users user) {
 		if (userPropertyIsNull(user) || !userPasswordIsStrong(user))
 			throw new Error();
-		user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
+		user.setPassword(securityConfig.bCryptPasswordEncoder().encode(user.getPassword()));
 		return userRepository.save(user);
 	}
 
-	public final Optional<User> findByEmail(final String email) {
+	public final Optional<Users> findByEmail(final String email) {
 		if (email == null || email.trim().length() == 0) {
 			throw new Error();
 		}
 		return userRepository.findByEmail(email);
-	};
-
-	public final boolean userPropertyIsNull(final User user) {
-		if (user == null || user.getEmail().trim().length() == 0 || user.getUsername().trim().length() == 0
-				|| user.getPassword().trim().length() == 0) {
-			return true;
-		}
-		return false;
 	}
 
-	public final boolean userPasswordIsStrong(final User user) {
+	public final boolean userPropertyIsNull(final Users user) {
+		return user == null || user.getEmail().trim().length() == 0 || user.getUsername().trim().length() == 0
+				|| user.getPassword().trim().length() == 0;
+	}
+
+	public final boolean userPasswordIsStrong(final Users user) {
 		return (isValid(user.getPassword()));
 	}
 
