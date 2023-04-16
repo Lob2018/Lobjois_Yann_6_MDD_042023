@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userNameOrEmail\": \"Toto\",\n    \"password\": \"test!1234\"\n}",
+							"raw": "{\n    \"email\": \"toto@toto.com\",\n    \"password\": \"Test&123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -39,13 +39,13 @@
 					"response": []
 				},
 				{
-					"name": "register",
+					"name": "register Toto",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userName\": \"Toto\",\n    \"email\": \"toto@toto.com\",\n    \"password\": \"Test&123\"\n}",
+							"raw": "{\n    \"username\": \"Toto\",\n    \"email\": \"toto@toto.com\",\n    \"password\": \"Test&123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -66,6 +66,29 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -92,12 +115,12 @@
 					"response": []
 				},
 				{
-					"name": "find by topic",
+					"name": "find by id",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/subject/:topic",
+							"raw": "localhost:8080/api/subject/:id",
 							"host": [
 								"localhost"
 							],
@@ -105,12 +128,12 @@
 							"path": [
 								"api",
 								"subject",
-								":topic"
+								":id"
 							],
 							"variable": [
 								{
-									"key": "topic",
-									"value": "JAVA"
+									"key": "id",
+									"value": null
 								}
 							]
 						}
@@ -118,12 +141,12 @@
 					"response": []
 				},
 				{
-					"name": "find posts by topic",
+					"name": "find subjects subscribed for current user",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/subject/:topic/posts",
+							"raw": "localhost:8080/api/subject/user",
 							"host": [
 								"localhost"
 							],
@@ -131,13 +154,33 @@
 							"path": [
 								"api",
 								"subject",
-								":topic",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find posts by subject id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/subject/:id/posts",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"subject",
+								":id",
 								"posts"
 							],
 							"variable": [
 								{
-									"key": "topic",
-									"value": "JAVA"
+									"key": "id",
+									"value": "1"
 								}
 							]
 						}
@@ -150,7 +193,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/subject/:topic/user/:userName",
+							"raw": "localhost:8080/api/subject/:subjectId/user/:userId",
 							"host": [
 								"localhost"
 							],
@@ -158,18 +201,18 @@
 							"path": [
 								"api",
 								"subject",
-								":topic",
+								":subjectId",
 								"user",
-								":userName"
+								":userId"
 							],
 							"variable": [
 								{
-									"key": "topic",
-									"value": "JAVA"
+									"key": "subjectId",
+									"value": "2"
 								},
 								{
-									"key": "userName",
-									"value": "Toto"
+									"key": "userId",
+									"value": "1"
 								}
 							]
 						}
@@ -182,7 +225,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/subject/:topic/user/:userName",
+							"raw": "localhost:8080/api/subject/:subjectId/user/:userId",
 							"host": [
 								"localhost"
 							],
@@ -190,18 +233,18 @@
 							"path": [
 								"api",
 								"subject",
-								":topic",
+								":subjectId",
 								"user",
-								":userName"
+								":userId"
 							],
 							"variable": [
 								{
-									"key": "topic",
-									"value": "JAVA"
+									"key": "subjectId",
+									"value": "2"
 								},
 								{
-									"key": "userName",
-									"value": "Toto"
+									"key": "userId",
+									"value": null
 								}
 							]
 						}
@@ -233,7 +276,7 @@
 					"response": []
 				},
 				{
-					"name": "find by id",
+					"name": "find a post by id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -251,7 +294,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "1"
+									"value": null
 								}
 							]
 						}
@@ -413,12 +456,12 @@
 			"name": "user",
 			"item": [
 				{
-					"name": "find by username",
+					"name": "find by user id",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/user/:userName",
+							"raw": "localhost:8080/api/user/:id",
 							"host": [
 								"localhost"
 							],
@@ -426,12 +469,12 @@
 							"path": [
 								"api",
 								"user",
-								":userName"
+								":id"
 							],
 							"variable": [
 								{
-									"key": "userName",
-									"value": "Toto"
+									"key": "id",
+									"value": null
 								}
 							]
 						}
@@ -491,37 +534,6 @@
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "subscription",
-			"item": [
-				{
-					"name": "find by userName",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/subscription/:userName",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"subscription",
-								":userName"
-							],
-							"variable": [
-								{
-									"key": "userName",
-									"value": "Toto"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
 		}
 	],
 	"auth": {
@@ -529,7 +541,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b3RvQHRvdG8uY29tIiwiaXNzIjoiZnIuc29mdDY0IiwiaWF0IjoxNjgxNjYwMjE5LCJleHAiOjE2ODIyNjUwMTl9.c8VLN-RZ51SenWvNdFXkHkplCOgTigNmQicKxkGRImwNrqBSeCnPq49QoxjpmEaoOxEdEyCyY995WyNFeliyPA",
 				"type": "string"
 			}
 		]

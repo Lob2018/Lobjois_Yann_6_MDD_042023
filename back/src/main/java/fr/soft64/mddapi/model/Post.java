@@ -1,7 +1,6 @@
 package fr.soft64.mddapi.model;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -26,17 +25,17 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "subject_id")
-	private Subject subject;
-
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "author_id")
 	private Users user;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "subject_id")
+	private Subject subject;
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "post_id")
-	List<Comment> comments = new ArrayList<>();
+	List<Comment> comments;
 
 	@NotBlank
 	@Column(name = "title")
@@ -60,20 +59,20 @@ public class Post {
 		this.id = id;
 	}
 
-	public Subject getSubject() {
-		return subject;
-	}
-
-	public void setSubject(Subject subject) {
-		this.subject = subject;
-	}
-
 	public Users getUser() {
 		return user;
 	}
 
 	public void setUser(Users user) {
 		this.user = user;
+	}
+
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
 	}
 
 	public List<Comment> getComments() {
@@ -106,12 +105,6 @@ public class Post {
 
 	public void setCreated_at(ZonedDateTime created_at) {
 		this.created_at = created_at;
-	}
-
-	@Override
-	public String toString() {
-		return "Post [id=" + id + ", subject=" + subject + ", user=" + user + ", comments=" + comments + ", title="
-				+ title + ", content=" + content + ", created_at=" + created_at + "]";
 	}
 
 }

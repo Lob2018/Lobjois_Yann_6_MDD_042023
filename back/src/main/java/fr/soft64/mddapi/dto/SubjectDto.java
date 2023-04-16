@@ -1,21 +1,13 @@
-package fr.soft64.mddapi.model;
-
-import java.util.HashSet;
-import java.util.Set;
+package fr.soft64.mddapi.dto;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-@Entity
-@Table(name = "subjects")
-public class Subject {
+public class SubjectDto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -29,14 +21,6 @@ public class Subject {
 	@Column(name = "description", length = 2000)
 	@Size(max = 255)
 	private String description;
-
-	@ManyToMany(mappedBy = "subjects")
-	private Set<Users> users = new HashSet<Users>();
-
-	@Override
-	public int hashCode() {
-		return getClass().hashCode();
-	}
 
 	public Long getId() {
 		return id;
@@ -61,13 +45,4 @@ public class Subject {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public Set<Users> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<Users> users) {
-		this.users = users;
-	}
-
 }

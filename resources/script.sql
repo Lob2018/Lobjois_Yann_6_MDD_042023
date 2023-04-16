@@ -10,7 +10,6 @@ CREATE TABLE `USERS` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
 );
-
 CREATE UNIQUE INDEX `USERSMAIL_index` ON `USERS` (`email`);
 
 CREATE TABLE `SUBJECTS` (
@@ -27,6 +26,7 @@ CREATE TABLE `SUBSCRIPTIONS` (
   FOREIGN KEY (`user_id`) REFERENCES `USERS`(`id`) ON DELETE CASCADE,
   FOREIGN KEY (`subject_id`) REFERENCES `SUBJECTS`(`id`) ON DELETE CASCADE
 );
+ALTER TABLE `SUBSCRIPTIONS` ADD UNIQUE `unique_index`(`user_id`, `subject_id`);
 
 CREATE TABLE `POSTS` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,

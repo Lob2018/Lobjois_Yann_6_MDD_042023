@@ -1,6 +1,9 @@
 package fr.soft64.mddapi.model;
 
+import org.springframework.format.annotation.NumberFormat;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,14 +17,18 @@ public class Subscription {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NumberFormat
+	private Long user_id;
+	@NumberFormat
+	private Long subject_id;
 
-	@ManyToOne
-	@JoinColumn(name = "subject_id")
-	private Subject subject;
+	public Subscription() {
+	}
 
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private Users user;
+	public Subscription(Long user_id, Long subject_id) {
+		this.user_id = user_id;
+		this.subject_id = subject_id;
+	}
 
 	public Long getId() {
 		return id;
@@ -31,25 +38,19 @@ public class Subscription {
 		this.id = id;
 	}
 
-	public Subject getSubject() {
-		return subject;
+	public Long getUser_id() {
+		return user_id;
 	}
 
-	public void setSubject(Subject subject) {
-		this.subject = subject;
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
 	}
 
-	public Users getUser() {
-		return user;
+	public Long getSubject_id() {
+		return subject_id;
 	}
 
-	public void setUser(Users user) {
-		this.user = user;
+	public void setSubject_id(Long subject_id) {
+		this.subject_id = subject_id;
 	}
-
-	@Override
-	public String toString() {
-		return "Subscription [id=" + id + ", subject=" + subject + ", user=" + user + "]";
-	}
-
 }
