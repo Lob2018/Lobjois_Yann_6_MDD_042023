@@ -335,7 +335,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"author_name\": \"Toto\",\n    \"subject_topic\": \"2012-01-01\",\n    \"title\": \"Titre\",\n    \"content\": \"Content\",\n    \"created_at\": \"2012-01-01\"\n}",
+							"raw": "{\n    \"subject_id\": 1,\n    \"title\": \"Title\",\n    \"content\": \"Content\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -357,13 +357,49 @@
 					"response": []
 				},
 				{
+					"name": "create post's comment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"comment\": \"Comment updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/post/:id/comment",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"post",
+								":id",
+								"comment"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "update",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"author_name\": \"Toto\",\n    \"subject_topic\": \"2012-01-01\",\n    \"title\": \"Titre\",\n    \"content\": \"Content\",\n    \"created_at\": \"2012-01-01\"\n}",
+							"raw": "{\n    \"subject_id\":2,\n    \"title\": \"Title2\",\n    \"content\": \"Content2\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -412,39 +448,6 @@
 									"key": "id",
 									"value": "2"
 								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "comment",
-			"item": [
-				{
-					"name": "create",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"username\": \"Toto\",\n    \"created_at\": \"2012-01-01\",\n    \"post_id\": 1,\n    \"comment\": \"my comment\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/comment",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"comment"
 							]
 						}
 					},
@@ -541,7 +544,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b3RvQHRvdG8uY29tIiwiaXNzIjoiZnIuc29mdDY0IiwiaWF0IjoxNjgxNjYwMjE5LCJleHAiOjE2ODIyNjUwMTl9.c8VLN-RZ51SenWvNdFXkHkplCOgTigNmQicKxkGRImwNrqBSeCnPq49QoxjpmEaoOxEdEyCyY995WyNFeliyPA",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b3RvQHRvdG8uY29tIiwiaXNzIjoiZnIuc29mdDY0IiwiaWF0IjoxNjgxOTgyMDQxLCJleHAiOjE2ODI1ODY4NDF9.rSyLAFOLCIqfBkhZJnuC2gAypoc4XfBIPdinpGzMOH9cd9PBHF_gPzNvJ9HBHBS1gDz3S-pkV0fZsIYbWUUU1A",
 				"type": "string"
 			}
 		]

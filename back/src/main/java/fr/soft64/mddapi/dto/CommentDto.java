@@ -1,34 +1,32 @@
-package fr.soft64.mddapi.model;
+package fr.soft64.mddapi.dto;
 
 import java.time.ZonedDateTime;
+
+import org.springframework.format.annotation.NumberFormat;
+
+import fr.soft64.mddapi.model.Post;
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-@Entity
-@Table(name = "comments")
-public class Comment {
+public class CommentDto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "commentator_id")
-	private Users user;
+	@Size(max = 255)
+	private String username;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "post_id")
-	private Post post;
+	@NumberFormat
+	private Long postId;
 
 	@NotNull
 	@Column(name = "created_at", updatable = false)
@@ -39,9 +37,6 @@ public class Comment {
 	@Size(max = 2000)
 	private String comment;
 
-	public Comment() {
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -50,20 +45,20 @@ public class Comment {
 		this.id = id;
 	}
 
-	public Users getUser() {
-		return user;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUser(Users user) {
-		this.user = user;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public Post getPost() {
-		return post;
+	public Long getPostId() {
+		return postId;
 	}
 
-	public void setPost(Post post) {
-		this.post = post;
+	public void setPostId(Long postId) {
+		this.postId = postId;
 	}
 
 	public ZonedDateTime getCreated_at() {
@@ -81,4 +76,5 @@ public class Comment {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
+
 }

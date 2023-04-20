@@ -51,6 +51,9 @@ public class Post {
 	@Column(name = "created_at", updatable = false)
 	private ZonedDateTime created_at;
 
+	public Post() {
+	}
+
 	public Long getId() {
 		return id;
 	}

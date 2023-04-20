@@ -48,16 +48,11 @@ public class SubjectController {
 
 	@Autowired
 	private UserService userService;
-
 	@Autowired
-	private SubjectService subjectService;
-
-	@Autowired
+	private SubjectService subjectService;	@Autowired
 	private SubscriptionService subscriptionService;
-
 	@Autowired
 	private PostService postService;
-
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -174,7 +169,7 @@ public class SubjectController {
 	@PostMapping("/{subjectId}/user/{userId}")
 	@Operation(description = "User subscribe to a subject")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
-			+ "  \"message\": \"User subscribed !\"\r\n" + "}")), responseCode = "200")
+			+ "  \"message\": \"User subscribed !\"\r\n" + "}")), responseCode = "201")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
 			+ "  \"message\": \"error\"\r\n" + "}")), responseCode = "400", description = "Bad Request")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{}")), responseCode = "401", description = "Unauthorized")
@@ -199,7 +194,7 @@ public class SubjectController {
 			final Subscription subscription = new Subscription(user.get().getId(), subject.get().getId());
 			subscriptionService.createSubscription(subscription);
 			map.put("message", "User subscribed !");
-			return ResponseEntity.ok().body(map);
+			return ResponseEntity.status(HttpStatus.CREATED).body(map);
 		} catch (DataIntegrityViolationException ex) {
 			map.put("message", ex.getLocalizedMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);

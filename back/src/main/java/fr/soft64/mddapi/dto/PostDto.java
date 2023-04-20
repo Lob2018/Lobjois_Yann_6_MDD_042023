@@ -7,6 +7,7 @@ import fr.soft64.mddapi.model.Users;
 public class PostDto {
 
 	private Long id;
+	private Long subject_id;
 	private String username;
 	private String title;
 	private String content;
@@ -55,4 +56,12 @@ public class PostDto {
 		this.created_at = created_at;
 	}
 
+	public Long getSubject_id() {
+		return subject_id;
+	}
+
+	public void setSubject_id(Long subject_id) {
+		this.subject_id = subject_id;
+	}
+	
 }

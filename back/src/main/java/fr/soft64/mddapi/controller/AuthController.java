@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,7 +45,6 @@ public class AuthController {
 	private AuthenticationManager authenticationManager;
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -56,7 +56,7 @@ public class AuthController {
 	@ResponseBody
 	@Operation(description = "Register a user")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
-			+ "  \"token\": \"jwt\"\r\n" + "}")), responseCode = "200")
+			+ "  \"token\": \"jwt\"\r\n" + "}")), responseCode = "201")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{}")), responseCode = "400", description = "Bad Request")
 	/**
 	 * Register a new user
@@ -78,8 +78,8 @@ public class AuthController {
 			final User autendicatedUser = (User) authenticate.getPrincipal();
 			final String token = jwtTokenUtil.generateAccessToken(autendicatedUser);
 			map.put("token", token);
-			return ResponseEntity.ok().body(map);
-		} catch (Error ex) {
+			return ResponseEntity.status(HttpStatus.CREATED).body(map);
+		} catch (DataIntegrityViolationException ex) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new HashMap<>());
 		}
 	}
