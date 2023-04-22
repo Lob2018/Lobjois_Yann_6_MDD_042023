@@ -1,9 +1,5 @@
 package fr.soft64.mddapi.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
 public class UserUpdateReturnMiniDto {
 
 	private String email;

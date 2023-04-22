@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.soft64.mddapi.model.Comment;
-import fr.soft64.mddapi.model.Post;
 import fr.soft64.mddapi.repository.CommentRepository;
 
 @Service

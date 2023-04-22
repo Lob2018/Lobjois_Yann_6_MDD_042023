@@ -2,8 +2,6 @@ package fr.soft64.mddapi.dto;
 
 import java.time.ZonedDateTime;
 
-import fr.soft64.mddapi.model.Users;
-
 public class PostDto {
 
 	private Long id;

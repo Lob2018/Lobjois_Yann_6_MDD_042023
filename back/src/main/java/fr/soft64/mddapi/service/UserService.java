@@ -6,12 +6,9 @@ import java.util.regex.Matcher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import fr.soft64.mddapi.configuration.SecurityConfig;
 import fr.soft64.mddapi.model.Users;
 import fr.soft64.mddapi.repository.UserRepository;
-import jakarta.persistence.PersistenceException;
 
 @Service
 public class UserService {
