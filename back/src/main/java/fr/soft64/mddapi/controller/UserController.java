@@ -52,7 +52,7 @@ public class UserController {
 	/**
 	 * Update user email and username
 	 * 
-	 * @param userCreateMiniDto The new user data
+	 * @param userUpdateMiniDto The new user data
 	 * @return The HTTP response
 	 */
 	@PutMapping("")

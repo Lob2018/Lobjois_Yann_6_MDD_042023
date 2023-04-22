@@ -114,7 +114,6 @@ public class SubjectController {
 	/**
 	 * Get all subscribed subjects for current user
 	 * 
-	 * @param id subject id
 	 * @return The HTTP response
 	 */
 	@GetMapping("/user")
@@ -162,7 +161,7 @@ public class SubjectController {
 	/**
 	 * User subscribe to a subject
 	 * 
-	 * @param subjectId the subject id
+	 * @param id the subject id
 	 * @return The HTTP response
 	 */
 	@PostMapping("/{subjectId}/user")

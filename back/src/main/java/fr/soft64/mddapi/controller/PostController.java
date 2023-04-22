@@ -166,8 +166,6 @@ public class PostController {
 	/**
 	 * Create a post
 	 * 
-	 * @param post  The post to register
-	 * @param token The corresponding token
 	 * @return The HTTP response
 	 */
 	@PostMapping("")
@@ -292,7 +290,7 @@ public class PostController {
 			comment.setComment(postCommentMiniDto.getComment());
 			comment.setPost(postFound);
 			Comment commentCreated = commentService.createComment(comment);
-			final CommentDto returnedComment=convertCommentToDto(commentCreated);
+			final CommentDto returnedComment = convertCommentToDto(commentCreated);
 			return ResponseEntity.status(HttpStatus.CREATED).body(returnedComment);
 		} catch (NoSuchElementException ex) {
 			final HashMap<String, String> map = new HashMap<>();
