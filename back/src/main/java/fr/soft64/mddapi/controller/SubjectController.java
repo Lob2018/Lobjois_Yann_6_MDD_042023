@@ -49,7 +49,8 @@ public class SubjectController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private SubjectService subjectService;	@Autowired
+	private SubjectService subjectService;
+	@Autowired
 	private SubscriptionService subscriptionService;
 	@Autowired
 	private PostService postService;
@@ -163,21 +164,20 @@ public class SubjectController {
 	 * User subscribe to a subject
 	 * 
 	 * @param subjectId the subject id
-	 * @param userId    the user id
 	 * @return The HTTP response
 	 */
-	@PostMapping("/{subjectId}/user/{userId}")
+	@PostMapping("/{subjectId}/user")
 	@Operation(description = "User subscribe to a subject")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
 			+ "  \"message\": \"User subscribed !\"\r\n" + "}")), responseCode = "201")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
-			+ "  \"message\": \"error\"\r\n" + "}")), responseCode = "400", description = "Bad Request")
+			+ "  \"message\": \"The user already subscribes !\"\r\n"
+			+ "}")), responseCode = "409", description = "Conflict")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{}")), responseCode = "401", description = "Unauthorized")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
 			+ "  \"message\": \"Subject not found\"\r\n" + "}")), responseCode = "404", description = "Not Found")
 	public final ResponseEntity<Object> subscribe(
-			@Parameter(description = "The subject ID for which the user ID subscribed") @PathVariable("subjectId") Long id,
-			@PathVariable("userId") Long userId) {
+			@Parameter(description = "The subject ID for which the user ID subscribed") @PathVariable("subjectId") Long id) {
 		final HashMap<String, String> map = new HashMap<>();
 		try {
 			final String mail = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -189,15 +189,13 @@ public class SubjectController {
 				map.put("message", "Subject not found");
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
 			}
-			if (user.get().getId() != userId)
-				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new HashMap<>());
 			final Subscription subscription = new Subscription(user.get().getId(), subject.get().getId());
 			subscriptionService.createSubscription(subscription);
 			map.put("message", "User subscribed !");
 			return ResponseEntity.status(HttpStatus.CREATED).body(map);
 		} catch (DataIntegrityViolationException ex) {
-			map.put("message", ex.getLocalizedMessage());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
+			map.put("message", "The user already subscribes !");
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(map);
 		}
 	}
 
@@ -205,10 +203,9 @@ public class SubjectController {
 	 * User no longer subscribe to a subject
 	 * 
 	 * @param subjectId the subject id
-	 * @param userId    the user id
 	 * @return The HTTP response
 	 */
-	@DeleteMapping("/{subjectId}/user/{userId}")
+	@DeleteMapping("/{subjectId}/user")
 	@Operation(description = "User no longer subscribe to a subject")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
 			+ "  \"message\": \"User no longer subscribed !\"\r\n" + "}")), responseCode = "200")
@@ -218,18 +215,15 @@ public class SubjectController {
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
 			+ "  \"message\": \"Subscription not found\"\r\n" + "}")), responseCode = "404", description = "Not Found")
 	public final ResponseEntity<Object> unsubscribe(
-			@Parameter(description = "The subject ID for which the user ID no longer subscribe") @PathVariable("subjectId") Long subjectId,
-			@PathVariable("userId") Long userId) {
+			@Parameter(description = "The subject ID for which the user ID no longer subscribe") @PathVariable("subjectId") Long subjectId) {
 		final HashMap<String, String> map = new HashMap<>();
 		try {
 			final String mail = SecurityContextHolder.getContext().getAuthentication().getName();
 			final Optional<Users> user = userService.findByEmail(mail);
 			if (user.isEmpty())
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new HashMap<>());
-			if (user.get().getId() != userId)
-				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new HashMap<>());
-			final Optional<Subscription> subscription = subscriptionService.getSubscriptionWithUserAndSubjectId(userId,
-					subjectId);
+			final Optional<Subscription> subscription = subscriptionService
+					.getSubscriptionWithUserAndSubjectId(user.get().getId(), subjectId);
 			if (subscription.isEmpty()) {
 				map.put("message", "Subscription not found");
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
@@ -238,7 +232,6 @@ public class SubjectController {
 			map.put("message", "User no longer subscribe !");
 			return ResponseEntity.ok().body(map);
 		} catch (DataIntegrityViolationException ex) {
-			ex.printStackTrace();
 			map.put("message", ex.getLocalizedMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
 		}

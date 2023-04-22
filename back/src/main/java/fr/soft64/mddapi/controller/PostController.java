@@ -25,7 +25,6 @@ import fr.soft64.mddapi.dto.PostCommentMiniDto;
 import fr.soft64.mddapi.dto.PostCommentsDto;
 import fr.soft64.mddapi.dto.PostCreateMiniDto;
 import fr.soft64.mddapi.dto.PostDto;
-import fr.soft64.mddapi.dto.SubjectDto;
 import fr.soft64.mddapi.model.Comment;
 import fr.soft64.mddapi.model.Post;
 import fr.soft64.mddapi.model.Subject;
@@ -204,7 +203,7 @@ public class PostController {
 	@PutMapping("/{postId}")
 	@ResponseBody
 	@Operation(description = "Create a post")
-	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\"id\":2,\"subject_id\":2,\"username\":\"Toto\",\"title\":\"Title2\",\"content\":\"Content2\",\"created_at\":\"2023-01-30T19:44:28+01:00\"}")), responseCode = "201")
+	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\"id\":2,\"subject_id\":2,\"username\":\"Toto\",\"title\":\"Title2\",\"content\":\"Content2\",\"created_at\":\"2023-01-30T19:44:28+01:00\"}")), responseCode = "200")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{}")), responseCode = "401", description = "Unauthorized")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
 			+ "  \"message\": \"Not found\"\r\n" + "}")), responseCode = "404", description = "Not Found")
@@ -294,7 +293,7 @@ public class PostController {
 			comment.setPost(postFound);
 			Comment commentCreated = commentService.createComment(comment);
 			final CommentDto returnedComment=convertCommentToDto(commentCreated);
-			return ResponseEntity.status(HttpStatus.OK).body(returnedComment);
+			return ResponseEntity.status(HttpStatus.CREATED).body(returnedComment);
 		} catch (NoSuchElementException ex) {
 			final HashMap<String, String> map = new HashMap<>();
 			map.put("message", "Not found");

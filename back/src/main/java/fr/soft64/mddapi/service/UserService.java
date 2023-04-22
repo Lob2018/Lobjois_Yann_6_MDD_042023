@@ -6,10 +6,12 @@ import java.util.regex.Matcher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.soft64.mddapi.configuration.SecurityConfig;
 import fr.soft64.mddapi.model.Users;
 import fr.soft64.mddapi.repository.UserRepository;
+import jakarta.persistence.PersistenceException;
 
 @Service
 public class UserService {
@@ -24,6 +26,13 @@ public class UserService {
 	private final Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 
 	public final Users createUser(final Users user) {
+		if (userPropertyIsNull(user) || !userPasswordIsStrong(user))
+			throw new Error();
+		user.setPassword(securityConfig.bCryptPasswordEncoder().encode(user.getPassword()));
+		return userRepository.save(user);
+	}
+
+	public final Users updateUser(final Users user) {
 		if (userPropertyIsNull(user) || !userPasswordIsStrong(user))
 			throw new Error();
 		user.setPassword(securityConfig.bCryptPasswordEncoder().encode(user.getPassword()));
@@ -57,8 +66,8 @@ public class UserService {
 	 * (?=.*[0-9]) # positive lookahead, digit [0-9]<br>
 	 * (?=.*[a-z]) # positive lookahead, one lowercase character [a-z]<br>
 	 * (?=.*[A-Z]) # positive lookahead, one uppercase character [A-Z]<br>
-	 * {@code(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]) # positive lookahead, one of the special}
-	 * character in this [..]<br>
+	 * {@code(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]) # positive lookahead, one of the
+	 * special} character in this [..]<br>
 	 * . # matches anything #<br>
 	 * {8,254} # length at least 8 characters and maximum of 254 characters<br>
 	 * $ # end of line<br>

@@ -11,6 +11,8 @@ CREATE TABLE `USERS` (
   `password` varchar(255) NOT NULL
 );
 CREATE UNIQUE INDEX `USERSMAIL_index` ON `USERS` (`email`);
+CREATE UNIQUE INDEX `USERSNAME_index` ON `USERS` (`username`);
+
 
 CREATE TABLE `SUBJECTS` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,

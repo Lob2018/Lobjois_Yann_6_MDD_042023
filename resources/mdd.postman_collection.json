@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "975d17eb-f5a2-4ef5-bf8d-71f40e521b13",
+		"_postman_id": "b6f040fa-a878-4b51-a58e-340d81c5e095",
 		"name": "MDD",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "4730739"
@@ -459,78 +459,28 @@
 			"name": "user",
 			"item": [
 				{
-					"name": "find by user id",
+					"name": "update",
 					"request": {
-						"method": "GET",
+						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"toto@toto.com\",\n    \"username\": \"Toto\",\n    \"password\": \"Test&123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/user/:id",
+							"raw": "localhost:8080/api/user",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"user",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": null
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "find by email",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/user/:email",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"user",
-								":email"
-							],
-							"variable": [
-								{
-									"key": "email",
-									"value": "toto@toto.com"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/user/:id",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"user",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"user"
 							]
 						}
 					},
@@ -544,7 +494,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b3RvQHRvdG8uY29tIiwiaXNzIjoiZnIuc29mdDY0IiwiaWF0IjoxNjgxOTgyMDQxLCJleHAiOjE2ODI1ODY4NDF9.rSyLAFOLCIqfBkhZJnuC2gAypoc4XfBIPdinpGzMOH9cd9PBHF_gPzNvJ9HBHBS1gDz3S-pkV0fZsIYbWUUU1A",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b3RvQHRvdG8uY29tIiwiaXNzIjoiZnIuc29mdDY0IiwiaWF0IjoxNjgyMTcyOTY3LCJleHAiOjE2ODI3Nzc3Njd9.9seT6o9-uJuVf8ah_OUs8aRYWivicbNPqqLTBXEYgx9hDn-Xw-9X0dO3Az0P6TNIGD-IF2mWCtxp6JKniwoXCQ",
 				"type": "string"
 			}
 		]
