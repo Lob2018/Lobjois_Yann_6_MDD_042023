@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class UserUpdateReturnMiniDto {
+public class UserReturnMiniDto {
 
 	@NotBlank
 	@Size(max = 255)
@@ -15,7 +15,8 @@ public class UserUpdateReturnMiniDto {
 	@Size(max = 255)
 	private String email;
 
-	private String token;
+	public UserReturnMiniDto() {
+	}
 
 	public String getEmail() {
 		return email;
@@ -31,13 +32,5 @@ public class UserUpdateReturnMiniDto {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
 	}
 }

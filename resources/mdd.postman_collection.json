@@ -193,7 +193,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/subject/:subjectId/user/:userId",
+							"raw": "localhost:8080/api/subject/:subjectId/user",
 							"host": [
 								"localhost"
 							],
@@ -202,17 +202,12 @@
 								"api",
 								"subject",
 								":subjectId",
-								"user",
-								":userId"
+								"user"
 							],
 							"variable": [
 								{
 									"key": "subjectId",
 									"value": "2"
-								},
-								{
-									"key": "userId",
-									"value": "1"
 								}
 							]
 						}
@@ -225,7 +220,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/subject/:subjectId/user/:userId",
+							"raw": "localhost:8080/api/subject/:subjectId/user",
 							"host": [
 								"localhost"
 							],
@@ -234,17 +229,12 @@
 								"api",
 								"subject",
 								":subjectId",
-								"user",
-								":userId"
+								"user"
 							],
 							"variable": [
 								{
 									"key": "subjectId",
 									"value": "2"
-								},
-								{
-									"key": "userId",
-									"value": null
 								}
 							]
 						}
@@ -459,6 +449,25 @@
 			"name": "user",
 			"item": [
 				{
+					"name": "user data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/user",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "update",
 					"request": {
 						"method": "PUT",
@@ -494,7 +503,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b3RvQHRvdG8uY29tIiwiaXNzIjoiZnIuc29mdDY0IiwiaWF0IjoxNjgyMTcyOTY3LCJleHAiOjE2ODI3Nzc3Njd9.9seT6o9-uJuVf8ah_OUs8aRYWivicbNPqqLTBXEYgx9hDn-Xw-9X0dO3Az0P6TNIGD-IF2mWCtxp6JKniwoXCQ",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b3RvQHRvdG8uY29tIiwiaXNzIjoiZnIuc29mdDY0IiwiaWF0IjoxNjgyNTExMzk3LCJleHAiOjE2ODMxMTYxOTd9.67BjTVLLgiyN-_GNAY4RF9UVc0xohQVs4vTYoBTm9s40DBSfULiPDMbOkrPMHSX0pIribLHaW_OWOpLxPULaBA",
 				"type": "string"
 			}
 		]
