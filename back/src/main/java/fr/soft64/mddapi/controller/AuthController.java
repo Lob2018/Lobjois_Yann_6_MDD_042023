@@ -89,7 +89,7 @@ public class AuthController {
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
 			+ "  \"token\": \"jwt\"\r\n" + "}")), responseCode = "200")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
-			+ "  \"message\": \"error\"\r\n" + "}")), responseCode = "401", description = "Unauthorized")
+			+ "  \"message\": \"Error on login process\"\r\n" + "}")), responseCode = "401", description = "Unauthorized")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{}")), responseCode = "400", description = "Bad Request")
 	/**
 	 * User login
@@ -110,7 +110,7 @@ public class AuthController {
 			map.put("token", token);
 			return ResponseEntity.ok().body(map);
 		} catch (BadCredentialsException ex) {
-			map.put("message", "error");
+			map.put("message", "Error on login process");
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(map);
 		}
 	}

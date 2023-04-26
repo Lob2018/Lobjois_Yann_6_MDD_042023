@@ -105,3 +105,6 @@ hs_err_pid*
 
 ### My batch with my environment variables values
 PERSO_MDD_CREATE_ENVIRONMENT_VAR.bat 
+
+### Angular documentation from Compodoc
+front/documentation

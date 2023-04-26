@@ -208,7 +208,7 @@ public class SubjectController {
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
 			+ "  \"message\": \"User no longer subscribed !\"\r\n" + "}")), responseCode = "200")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
-			+ "  \"message\": \"error\"\r\n" + "}")), responseCode = "400", description = "Bad Request")
+			+ "  \"message\": \"Error during unsubscribe process\"\r\n" + "}")), responseCode = "400", description = "Bad Request")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{}")), responseCode = "401", description = "Unauthorized")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
 			+ "  \"message\": \"Subscription not found\"\r\n" + "}")), responseCode = "404", description = "Not Found")
@@ -229,8 +229,8 @@ public class SubjectController {
 			subscriptionService.deleteSubscriptionById(subscription.get().getId());
 			map.put("message", "User no longer subscribe !");
 			return ResponseEntity.ok().body(map);
-		} catch (DataIntegrityViolationException ex) {
-			map.put("message", ex.getLocalizedMessage());
+		} catch (Exception ex) {
+			map.put("message", "Error during unsubscribe process");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
 		}
 	}
