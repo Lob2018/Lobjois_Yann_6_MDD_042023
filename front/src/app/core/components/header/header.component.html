@@ -1,0 +1,64 @@
+<header>
+  <nav aria-label="Main navigation" *ngIf="isDesktop; else isMobile">
+    <mat-toolbar role="menubar">
+      <button
+        class="yl-button-image-accessibility"
+        role="menuitem"
+        routerLink=""
+        aria-label="Monde De Dév"
+      >
+        <img src="/assets/pictures/logo_mdd.png" alt="Logo" />
+      </button>
+      <span class="menu-spacer"></span>
+      <button
+        role="menuitem"
+        mat-button
+        routerLink="posts"
+        routerLinkActive="active"
+      >
+        Articles
+      </button>
+      <button
+        role="menuitem"
+        mat-button
+        routerLink="subjects"
+        routerLinkActive="active"
+      >
+        Thèmes
+      </button>
+      <button
+        id="button-user"
+        class="yl-button-image-accessibility"
+        role="menuitem"
+        routerLink="user"
+        aria-label="User account"
+      >
+        <img src="/assets/pictures/user.png" alt="User account" />
+      </button>
+    </mat-toolbar>
+  </nav>
+
+  <ng-template #isMobile>
+    <nav aria-label="Main navigation">
+      <mat-toolbar role="menubar">
+        <button
+          class="yl-button-image-accessibility"
+          role="menuitem"
+          routerLink=""
+          aria-label="Monde De Dév"
+        >
+          <img src="/assets/pictures/logo_mdd.png" alt="Logo" />
+        </button>
+        <span class="menu-spacer"></span>
+        <button
+          class="yl-button-image-accessibility"
+          role="menuitem"
+          aria-label="Toggle navigation"
+          (click)="openMenu()"
+        >
+          <img src="/assets/pictures/menu_burger.png" alt="Toggle navigation" />
+        </button>
+      </mat-toolbar>
+    </nav>
+  </ng-template>
+</header>

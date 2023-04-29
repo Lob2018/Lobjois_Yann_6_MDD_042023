@@ -96,7 +96,6 @@
   font: 400 14px/20px Inter, "Helvetica Neue", sans-serif;
   letter-spacing: normal;
 }
-.mat-button,
 .mat-raised-button,
 .mat-icon-button,
 .mat-stroked-button,
@@ -106,6 +105,11 @@
   font-family: Inter, "Helvetica Neue", sans-serif;
   font-size: 14px;
   font-weight: 500;
+}
+.mat-button {
+  font-family: Inter, "Helvetica Neue", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
 }
 .mat-button-toggle {
   font-family: Inter, "Helvetica Neue", sans-serif;
@@ -1099,7 +1103,7 @@ textarea.cdk-textarea-autosize-measuring-firefox {
   background: #000;
 }
 .mat-stroked-button:not(.mat-button-disabled) {
-  border-color: rgba(0, 0, 0, 0.12);
+  border-color: rgba(0, 0, 0, 1);
 }
 .mat-flat-button,
 .mat-raised-button,

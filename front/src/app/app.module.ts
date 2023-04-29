@@ -1,28 +1,23 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
-import { TopicComponent } from './topic/topic.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatButtonModule} from '@angular/material/button';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatIconModule} from '@angular/material/icon';
+import { AppRoutingModule } from './app-routing.module';
+import { LandingPageModule } from './landing-page/landing-page.module';
+import { CoreModule } from './core/core.module';
+import { AuthModule } from './auth/auth.module';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TopicComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    MatSlideToggleModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatIconModule
+    AppRoutingModule,
+    CoreModule,
+    LandingPageModule,
+    LayoutModule,
+    AuthModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
