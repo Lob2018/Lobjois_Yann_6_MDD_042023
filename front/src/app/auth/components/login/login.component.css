@@ -1,41 +1,31 @@
-.form-card,
-.face-snap-card {
-  box-sizing: border-box;
-  width: 50%;
-  margin: 20px auto;
-  padding: 10px 30px;
-  box-shadow: lightgray 4px 4px 20px;
+button.yl-button-image-accessibility {
+  position: absolute;
+  max-height: 23px;
+  margin-top: 44px;
+  margin-left: 51px;
 }
-
-.face-snap-card img {
-  width: 100%;
+button.yl-button-image-accessibility img {
+  max-width: 39px;
 }
-.face-snap-card h2 {
-  margin-bottom: 0;
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto 80px auto;
+  padding-top: 40px;
+  width: 15.6rem;
 }
-.face-snap-card p {
-  font-weight: 300;
+.login-form legend {
+  font-size: 1.5rem;
+  margin-bottom: 2.7rem;
+}
+mat-form-field {
+  width: 15.6rem;
+}
+.custom-label {
   font-size: 16px;
 }
-
-.form-group {
-  margin: 10px auto;
-  width: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-input,
-textarea {
-  width: 50%;
-}
-
-.action-buttons {
-  width: 100%;
-}
-
-button {
-  display: block;
-  margin: 20px auto;
+.login-form button {
+  height: 40px;
+  width: 139px;
 }

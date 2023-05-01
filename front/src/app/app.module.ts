@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LandingPageModule } from './landing-page/landing-page.module';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
-import { LayoutModule } from '@angular/cdk/layout';
+import { NotFoundModule } from './not-found/not-found.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,7 +14,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     AppRoutingModule,
     CoreModule,
     LandingPageModule,
-    LayoutModule,
+    NotFoundModule,
     AuthModule,
   ],
   providers: [],

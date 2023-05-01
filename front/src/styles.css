@@ -1,11 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
-
 html,
-body {
-  height: 100%;
-}
-body {
+body,
+app-root {
+  padding: 0;
   margin: 0;
   font-family: "Inter", "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  box-sizing: border-box;
+  min-height: 100%;
+}
+body {
   border: 1px solid black;
+}
+
+button.yl-button-image-accessibility {
+  border: none;
+  padding: 0;
+  background-color: inherit;
+  max-height: 81px;
+}
+button.yl-button-image-accessibility img {
+  margin: 0;
 }

@@ -6,6 +6,7 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -14,18 +15,18 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   isDesktop!: boolean;
+  isVisibleMenu!: boolean;
 
   constructor(
     private router: Router,
     private breakpointObserver: BreakpointObserver,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private localStorageService: LocalStorageService
   ) {}
 
-  isShowDivIf = true;
-  toggleDisplayDivIf() {
-    this.isShowDivIf = !this.isShowDivIf;
-  }
-
+  /**
+   * Opens the dialog menu for mobiles
+   */
   openMenu(): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.height = '100%';
@@ -35,17 +36,6 @@ export class HeaderComponent implements OnInit {
     dialogConfig.autoFocus = false;
     dialogConfig.panelClass = 'yl-dialog-container';
     this.dialog.open(HeaderMenuDialogContent, dialogConfig);
-    //     enterAnimationDuration: string
-    // exitAnimationDuration: string
-
-    // dialogConfig.animation = {
-    //   value: 'my-dialog-enter',
-    //   duration: 300,
-    // };
-    //const dialogRef =...
-    // dialogRef.afterClosed().subscribe((result: any) => {
-    //   console.log(`Dialog result: ${result}`);
-    // });
   }
 
   ngOnInit() {
@@ -58,11 +48,24 @@ export class HeaderComponent implements OnInit {
           this.isDesktop = true;
         }
       });
+    this.isVisibleMenu = this.shouldShowMenu();
   }
 
-  // onAddNewFaceSnap() {
-  //   this.router.navigateByUrl('facesnaps/create');
-  // }
+  /**
+   * Hide the menu for routes login, register, and 404 if not logged
+   * @returns true if the menu needs to be hidden
+   */
+  shouldShowMenu(): boolean {
+    const currentUrl = this.router.url;
+    if (
+      currentUrl === '/auth/login' ||
+      currentUrl === '/auth/register' ||
+      (currentUrl === '/404' && !this.localStorageService.getToken())
+    ) {
+      return false;
+    }
+    return true;
+  }
 }
 
 @Component({

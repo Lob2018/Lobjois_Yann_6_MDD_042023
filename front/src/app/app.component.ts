@@ -1,3 +1,8 @@
+import {
+  BreakpointObserver,
+  BreakpointState,
+  Breakpoints,
+} from '@angular/cdk/layout';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -7,7 +12,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor(private router: Router) {}
+  isDesktop!: boolean;
+
+  constructor(
+    private router: Router,
+    private breakpointObserver: BreakpointObserver
+  ) {}
+
+  ngOnInit() {
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall])
+      .subscribe((result: BreakpointState) => {
+        if (result.matches) {
+          this.isDesktop = false;
+        } else {
+          this.isDesktop = true;
+        }
+      });
+  }
 
   shouldShowHeader(): boolean {
     const currentUrl = this.router.url;

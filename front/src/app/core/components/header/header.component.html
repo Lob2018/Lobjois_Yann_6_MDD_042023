@@ -11,6 +11,7 @@
       </button>
       <span class="menu-spacer"></span>
       <button
+        *ngIf="isVisibleMenu"
         role="menuitem"
         mat-button
         routerLink="posts"
@@ -19,6 +20,7 @@
         Articles
       </button>
       <button
+        *ngIf="isVisibleMenu"
         role="menuitem"
         mat-button
         routerLink="subjects"
@@ -27,6 +29,7 @@
         Thèmes
       </button>
       <button
+        *ngIf="isVisibleMenu"
         id="button-user"
         class="yl-button-image-accessibility"
         role="menuitem"
@@ -51,6 +54,7 @@
         </button>
         <span class="menu-spacer"></span>
         <button
+          *ngIf="isVisibleMenu"
           class="yl-button-image-accessibility"
           role="menuitem"
           aria-label="Toggle navigation"

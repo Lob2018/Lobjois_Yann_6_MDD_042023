@@ -1,0 +1,44 @@
+.container {
+  height: calc(100vh - 97px);
+  width: 100%;
+  box-sizing: border-box;
+  font-weight: 700;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0),
+      rgba(119, 99, 197, 1)
+    ),
+    url("~src/assets/pictures/404.jpg");
+  background-size: cover;
+  background-position-x: 40%;
+  background-position-y: 30%;
+}
+.container p {
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+  font-weight: 700;
+  font-size: 4rem;
+  text-align: center;
+  line-height: 5rem;
+}
+.container p span {
+  font-size: 8rem;
+}
+
+@media only screen and (max-width: 599.98px) {
+  .container {
+    height: calc(100vh - 65px);
+  }
+  .container p {
+    font-size: 2rem;
+    line-height: 3rem;
+  }
+  .container p span {
+    font-size: 4rem;
+  }
+}

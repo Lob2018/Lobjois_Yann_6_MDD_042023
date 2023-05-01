@@ -1,15 +1,42 @@
-<div class="form-card">
-    <h2>Connexion</h2>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" />
-    </div>
-    <div class="form-group">
-      <label for="password">Mot de passe</label>
-      <input type="password" id="password" />
-    </div>
-    <div class="action-buttons">
-      <button type="submit" (click)="onLogin()">Connexion</button>
-    </div>
-  </div>
-  
+<button
+  class="yl-button-image-accessibility"
+  aria-label="Return to previous page"
+  (click)="goBack()"
+>
+  <img src="/assets/pictures/arrow_left.png" alt="Return" />
+</button>
+<form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+  <legend>Se connecter</legend>
+  <mat-form-field appearance="outline" floatLabel="always">
+    <mat-label class="custom-label">E-mail ou nom d'utilisateur</mat-label>
+    <input matInput placeholder="Email" formControlName="email" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" floatLabel="always">
+    <mat-label class="custom-label">Mot de passe</mat-label>
+    <input
+style="max-height: 50px;"
+    matInput
+      [type]="hide ? 'password' : 'text'"
+      placeholder="Mot de passe"
+      formControlName="password"
+    />
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="hide = !hide"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide"
+    >
+      <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+    </button>
+  </mat-form-field>
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="form.invalid"
+  >
+    Se connecter
+  </button>
+  <p *ngIf="onError" class="error">An error occurred</p>
+</form>
