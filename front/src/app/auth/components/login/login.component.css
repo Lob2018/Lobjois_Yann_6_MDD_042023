@@ -1,18 +1,18 @@
 button.yl-button-image-accessibility {
   position: absolute;
   max-height: 23px;
-  margin-top: 44px;
+  margin-top: 32px;
   margin-left: 51px;
 }
-button.yl-button-image-accessibility img {
-  max-width: 39px;
+.form-logo {
+  display: none;
 }
 .login-form {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0 auto 80px auto;
-  padding-top: 40px;
+  padding-top: 47px;
   width: 15.6rem;
 }
 .login-form legend {
@@ -24,8 +24,37 @@ mat-form-field {
 }
 .custom-label {
   font-size: 16px;
+  color: black;
 }
 .login-form button {
+  margin-top: 0.47rem;
   height: 40px;
   width: 139px;
+}
+.input-first {
+  margin-bottom: -0.5px;
+}
+
+@media only screen and (max-width: 599.98px) {
+  button.yl-button-image-accessibility {
+    top: 0.8rem;
+    margin-left: 34px;
+  }
+  .login-form {
+    padding-top: 0px;  margin: 0 auto 70px auto;
+  }
+  .form-logo {
+    display: block;
+    height: 130px;
+    margin: 5.38rem auto 0 auto;
+    width: 100%;
+    object-fit: contain;
+  }
+  .login-form legend {
+    margin-top: -3px;
+    margin-bottom: 2.95rem;
+  }
+  .login-form button {
+    margin-top: 0.87rem;
+  }
 }

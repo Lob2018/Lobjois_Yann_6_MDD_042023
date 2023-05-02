@@ -1,5 +1,5 @@
-<header>
-  <nav aria-label="Main navigation" *ngIf="isDesktop; else isMobile">
+<header *ngIf="isDesktop; else isMobile">
+  <nav aria-label="Main navigation">
     <mat-toolbar role="menubar">
       <button
         class="yl-button-image-accessibility"
@@ -40,8 +40,9 @@
       </button>
     </mat-toolbar>
   </nav>
-
-  <ng-template #isMobile>
+</header>
+<ng-template #isMobile>
+  <header>
     <nav aria-label="Main navigation">
       <mat-toolbar role="menubar">
         <button
@@ -64,5 +65,5 @@
         </button>
       </mat-toolbar>
     </nav>
-  </ng-template>
-</header>
+  </header>
+</ng-template>

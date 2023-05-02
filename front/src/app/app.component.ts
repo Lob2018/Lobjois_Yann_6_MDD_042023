@@ -33,8 +33,13 @@ export class AppComponent {
 
   shouldShowHeader(): boolean {
     const currentUrl = this.router.url;
-    // hide the header for the landing page
-    if (currentUrl === '/') {
+    // hide the header for the landing page, and only mobile for login and register
+    if (
+      currentUrl === '/'
+       ||
+      (!this.isDesktop && currentUrl === '/auth/login') ||
+      (!this.isDesktop && currentUrl === '/auth/register') 
+    ) {
       return false;
     }
     return true;
