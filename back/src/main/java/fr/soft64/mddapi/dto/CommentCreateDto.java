@@ -15,7 +15,7 @@ public class CommentCreateDto {
 	private Post post;
 
 	@NotNull
-	private ZonedDateTime created_at;
+	private ZonedDateTime createdAt;
 
 	@NotBlank
 	@Size(max = 2000)
@@ -41,11 +41,11 @@ public class CommentCreateDto {
 	}
 
 	public ZonedDateTime getCreated_at() {
-		return created_at;
+		return createdAt;
 	}
 
 	public void setCreated_at(ZonedDateTime created_at) {
-		this.created_at = created_at;
+		this.createdAt = created_at;
 	}
 
 	public String getComment() {

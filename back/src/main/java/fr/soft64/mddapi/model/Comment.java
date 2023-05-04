@@ -32,7 +32,7 @@ public class Comment {
 
 	@NotNull
 	@Column(name = "created_at", updatable = false)
-	private ZonedDateTime created_at;
+	private ZonedDateTime createdAt;
 
 	@NotBlank
 	@Column(name = "comment", length = 2000)
@@ -67,11 +67,11 @@ public class Comment {
 	}
 
 	public ZonedDateTime getCreated_at() {
-		return created_at;
+		return createdAt;
 	}
 
 	public void setCreated_at(ZonedDateTime created_at) {
-		this.created_at = created_at;
+		this.createdAt = created_at;
 	}
 
 	public String getComment() {

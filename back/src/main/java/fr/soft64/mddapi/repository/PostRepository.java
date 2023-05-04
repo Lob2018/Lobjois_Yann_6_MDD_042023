@@ -10,6 +10,6 @@ import fr.soft64.mddapi.model.Subject;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-	List<Post> findBySubject(Subject subject);
+	List<Post> findBySubjectOrderByCreatedAtDesc(Subject subject);
 	
 }

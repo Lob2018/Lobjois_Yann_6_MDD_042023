@@ -9,7 +9,7 @@ public class PostDto {
 	private String username;
 	private String title;
 	private String content;
-	private ZonedDateTime created_at;
+	private ZonedDateTime createdAt;
 
 	public PostDto() {
 	}
@@ -47,11 +47,11 @@ public class PostDto {
 	}
 
 	public ZonedDateTime getCreated_at() {
-		return created_at;
+		return createdAt;
 	}
 
 	public void setCreated_at(ZonedDateTime created_at) {
-		this.created_at = created_at;
+		this.createdAt = created_at;
 	}
 
 	public Long getSubject_id() {

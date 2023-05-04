@@ -115,6 +115,27 @@
 					"response": []
 				},
 				{
+					"name": "find posts of subjects the user subscribed",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/subject/user/posts",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"subject",
+								"user",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "find by id",
 					"request": {
 						"method": "GET",
@@ -503,7 +524,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b3RvQHRvdG8uY29tIiwiaXNzIjoiZnIuc29mdDY0IiwiaWF0IjoxNjgyNTExMzk3LCJleHAiOjE2ODMxMTYxOTd9.67BjTVLLgiyN-_GNAY4RF9UVc0xohQVs4vTYoBTm9s40DBSfULiPDMbOkrPMHSX0pIribLHaW_OWOpLxPULaBA",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b3RvQHRvdG8uY29tIiwiaXNzIjoiZnIuc29mdDY0IiwiaWF0IjoxNjgzMjAxNzAyLCJleHAiOjE2ODM4MDY1MDJ9.xAzaDj5ATrwhlyly-KD1mc06sFF-7q-7z0KBTzIxp82JvPrn0dLv6vzMxQCVEZKuaw8dz0WAKTLOwgOARNlVDA",
 				"type": "string"
 			}
 		]

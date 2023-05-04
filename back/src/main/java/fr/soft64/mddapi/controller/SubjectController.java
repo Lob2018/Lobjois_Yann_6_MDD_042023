@@ -61,6 +61,10 @@ public class SubjectController {
 		return subjectDto;
 	}
 
+	private final Long convertSubjectToId(final Subject subject) {
+		return subject.getId();
+	}
+
 	private PostDto convertPostToDto(Post post) {
 		PostDto postDto = new PostDto();
 		postDto.setId(post.getId());
@@ -140,7 +144,7 @@ public class SubjectController {
 	 */
 	@GetMapping("/{subjectId}/posts")
 	@Operation(description = "Get posts by subject id")
-	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(implementation = SubjectDto.class)), responseCode = "200")
+	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\"posts\":[{\"id\":1,\"username\":\"Toto\",\"title\":\"titre1\",\"content\":\"contenu\",\"created_at\":\"2023-01-30T19:44:28+01:00\"},{\"id\":2,\"username\":\"Toto2\",\"title\":\"titre2\",\"content\":\"contenu2\",\"created_at\":\"2023-01-30T19:44:28+01:00\"}]}")), responseCode = "200")
 	@ApiResponse(content = @Content(schema = @Schema(defaultValue = "")), responseCode = "401", description = "Unauthorized")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
 			+ "  \"message\": \"Subject not found\"\r\n" + "}")), responseCode = "404", description = "Not Found")
@@ -155,7 +159,42 @@ public class SubjectController {
 		List<Post> allPosts = postService.findBySubjectRepository(subject.get());
 		final List<PostDto> postsDtoList = ((List<Post>) allPosts).stream().map(this::convertPostToDto)
 				.collect(Collectors.toList());
-		return ResponseEntity.ok().body(postsDtoList);
+		final HashMap<String, List<PostDto>> mapCompleted = new HashMap<>();
+		mapCompleted.put("posts", postsDtoList);
+		return ResponseEntity.ok().body(mapCompleted);
+	}
+
+	/**
+	 * Get posts by subjects the user subscribed
+	 * 
+	 * @return The HTTP response
+	 */
+	@GetMapping("/user/posts")
+	@Operation(description = "Get posts by subjects the user subscribed")
+	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\"posts\":[{\"id\":1,\"username\":\"Toto\",\"title\":\"titre1\",\"content\":\"contenu\",\"created_at\":\"2023-01-30T19:44:28+01:00\"},{\"id\":2,\"username\":\"Toto2\",\"title\":\"titre2\",\"content\":\"contenu2\",\"created_at\":\"2023-01-30T19:44:28+01:00\"}]}")), responseCode = "200")
+	@ApiResponse(content = @Content(schema = @Schema(defaultValue = "")), responseCode = "401", description = "Unauthorized")
+	public final ResponseEntity<Object> getPostsBySubjects() {
+		final String mail = SecurityContextHolder.getContext().getAuthentication().getName();
+		final Optional<Users> user = userService.findByEmail(mail);
+		if (user.isEmpty())
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new HashMap<>());
+		final List<Long> subjectsIdsList = ((Set<Subject>) user.get().getSubjects()).stream()
+				.map(this::convertSubjectToId).collect(Collectors.toList());
+		// without subscribe
+		if (subjectsIdsList.size() == 0) {
+			final List<PostDto> postsDtoList = ((Collection<Post>) postService.getAllPosts()).stream()
+					.map(this::convertPostToDto).collect(Collectors.toList());
+			final HashMap<String, List<PostDto>> map = new HashMap<>();
+			map.put("posts", postsDtoList);
+			return ResponseEntity.ok().body(map);
+		}
+		// query
+		List<Post> allPosts = postService.findBySubscribedSubjectRepository(subjectsIdsList);
+		final List<PostDto> postsDtoList = ((List<Post>) allPosts).stream().map(this::convertPostToDto)
+				.collect(Collectors.toList());
+		final HashMap<String, List<PostDto>> mapCompleted = new HashMap<>();
+		mapCompleted.put("posts", postsDtoList);
+		return ResponseEntity.ok().body(mapCompleted);
 	}
 
 	/**
@@ -208,7 +247,8 @@ public class SubjectController {
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
 			+ "  \"message\": \"User no longer subscribed !\"\r\n" + "}")), responseCode = "200")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
-			+ "  \"message\": \"Error during unsubscribe process\"\r\n" + "}")), responseCode = "400", description = "Bad Request")
+			+ "  \"message\": \"Error during unsubscribe process\"\r\n"
+			+ "}")), responseCode = "400", description = "Bad Request")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{}")), responseCode = "401", description = "Unauthorized")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
 			+ "  \"message\": \"Subscription not found\"\r\n" + "}")), responseCode = "404", description = "Not Found")

@@ -29,10 +29,12 @@ public class JwtTokenUtil {
 
 	private final Logger logger = LoggerFactory.getLogger(JwtTokenUtil.class);
 
+	// 1 week 
+	private final int expirationMiliseconds = 7 * 24 * 60 * 60 * 1000;
+
 	public final String generateAccessToken(final User autendicatedUser) {
 		return Jwts.builder().setSubject(format("%s", autendicatedUser.getUsername())).setIssuer(jwtIssuer)
-				.setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000)) // 1
-																														// week
+				.setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + expirationMiliseconds))
 				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
 
