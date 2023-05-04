@@ -2,12 +2,10 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 87px;
-  margin-bottom: 231px;
+  margin: 87px 0 231px 0;
 }
 .container img {
   margin-bottom: 44px;
@@ -18,6 +16,7 @@
   align-items: center;
   justify-content: center;
   gap: 3rem;
+  margin-bottom: 175px;
 }
 .mat-button-base {
   font-size: 16px;
@@ -27,7 +26,11 @@
 
 @media only screen and (max-width: 599.98px) {
   .container {
-    margin-top: 58px;    
+    padding-top: 58px;
+    margin: 0;
+  }
+  .mat-button-base:last-of-type {
+    margin-bottom: 231px;
   }
   .container img {
     margin-bottom: 54px;
@@ -37,6 +40,7 @@
     display: flex;
     flex-direction: column;
     gap: 2.3rem;
+    margin-bottom: 0px;
   }
   .mat-button-base {
     font-weight: 400;
