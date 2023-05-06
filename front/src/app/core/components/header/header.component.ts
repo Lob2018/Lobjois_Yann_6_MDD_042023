@@ -15,7 +15,6 @@ import { LocalStorageService } from '../../services/local-storage.service';
 })
 export class HeaderComponent implements OnInit {
   isDesktop!: boolean;
-  isVisibleMenu!: boolean;
 
   constructor(
     private router: Router,
@@ -48,7 +47,6 @@ export class HeaderComponent implements OnInit {
           this.isDesktop = true;
         }
       });
-    this.isVisibleMenu = this.shouldShowMenu();
   }
 
   /**

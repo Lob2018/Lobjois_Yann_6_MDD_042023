@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginRequest } from 'src/app/core/models/auth/loginRequest.interface';
-import { TokenResponse } from 'src/app/core/models/auth/token.interface';
+import { TokenResponse } from 'src/app/core/models/auth/tokenResponse.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';

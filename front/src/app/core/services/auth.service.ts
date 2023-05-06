@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RegisterRequest } from '../models/auth/registerRequest.interface';
 import { LoginRequest } from '../models/auth/loginRequest.interface';
-import { TokenResponse } from '../models/auth/token.interface';
+import { TokenResponse } from '../models/auth/tokenResponse.interface';
 
 @Injectable({
   providedIn: 'root',

@@ -11,7 +11,7 @@
       </button>
       <span class="menu-spacer"></span>
       <button
-        *ngIf="isVisibleMenu"
+        *ngIf="shouldShowMenu()"
         role="menuitem"
         mat-button
         routerLink="posts"
@@ -20,7 +20,7 @@
         Articles
       </button>
       <button
-        *ngIf="isVisibleMenu"
+        *ngIf="shouldShowMenu()"
         role="menuitem"
         mat-button
         routerLink="subjects"
@@ -29,11 +29,11 @@
         Thèmes
       </button>
       <button
-        *ngIf="isVisibleMenu"
+        *ngIf="shouldShowMenu()"
         id="button-user"
         class="yl-button-image-accessibility"
         role="menuitem"
-        routerLink="user"
+        routerLink="user-page"
         aria-label="User account"
       >
         <img src="/assets/pictures/user.png" alt="User account" />
@@ -55,7 +55,7 @@
         </button>
         <span class="menu-spacer"></span>
         <button
-          *ngIf="isVisibleMenu"
+          *ngIf="shouldShowMenu()"
           class="yl-button-image-accessibility"
           role="menuitem"
           aria-label="Toggle navigation"

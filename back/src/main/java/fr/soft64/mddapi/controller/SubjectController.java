@@ -69,6 +69,7 @@ public class SubjectController {
 		PostDto postDto = new PostDto();
 		postDto.setId(post.getId());
 		postDto.setTitle(post.getTitle());
+		postDto.setSubject_id(post.getSubject().getId());
 		postDto.setContent(post.getContent());
 		postDto.setUsername(post.getUser().getUsername());
 		postDto.setCreated_at(post.getCreated_at());
