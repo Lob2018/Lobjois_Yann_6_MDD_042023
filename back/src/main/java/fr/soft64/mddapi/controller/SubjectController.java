@@ -1,12 +1,14 @@
 package fr.soft64.mddapi.controller;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.soft64.mddapi.dto.PostDto;
 import fr.soft64.mddapi.dto.SubjectDto;
+import fr.soft64.mddapi.dto.SubjectDtoWithSubscribeOrNot;
 import fr.soft64.mddapi.model.Post;
 import fr.soft64.mddapi.model.Subject;
 import fr.soft64.mddapi.model.Subscription;
@@ -59,6 +62,16 @@ public class SubjectController {
 	private final SubjectDto convertSubjectToDto(final Subject subject) {
 		final SubjectDto subjectDto = modelMapper.map(subject, SubjectDto.class);
 		return subjectDto;
+	}
+
+	private final SubjectDtoWithSubscribeOrNot convertSubjectToSubscribeDto(final Subject subject,
+			final boolean subscribe) {
+		SubjectDtoWithSubscribeOrNot subjecSubscribetDto = new SubjectDtoWithSubscribeOrNot();
+		subjecSubscribetDto.setDescription(subject.getDescription());
+		subjecSubscribetDto.setId(subject.getId());
+		subjecSubscribetDto.setSubscribe(subscribe);
+		subjecSubscribetDto.setTopic(subject.getTopic());
+		return subjecSubscribetDto;
 	}
 
 	private final Long convertSubjectToId(final Subject subject) {
@@ -117,23 +130,35 @@ public class SubjectController {
 	}
 
 	/**
-	 * Get all subscribed subjects for current user
+	 * Get all subjects subscribed or not for current user (ordered by topics)
 	 * 
 	 * @return The HTTP response
 	 */
 	@GetMapping("/user")
-	@Operation(description = "Get all subscribed subjects for current user")
-	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\"subjects\":[{\"id\":1,\"topic\":\"Java\",\"description\":\"Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.\"},{\"id\":2,\"topic\":\"JavaScript\",\"description\":\"Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.\"},{\"id\":3,\"topic\":\"Python\",\"description\":\"Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.\"},{\"id\":4,\"topic\":\"Web3\",\"description\":\"Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.\"}]}")), responseCode = "200")
+	@Operation(description = "Get all subjects subscribed or not for current user (ordered by topics)")
+	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\"subjects\":[{\"id\":1,\"topic\":\"Java\",\"description\":\"Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.\",\"subscribe\":true},{\"id\":2,\"topic\":\"JavaScript\",\"description\":\"Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.\",\"subscribe\":true},{\"id\":3,\"topic\":\"Python\",\"description\":\"Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.\",\"subscribe\":false},{\"id\":4,\"topic\":\"Web3\",\"description\":\"Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.\",\"subscribe\":false}]}")), responseCode = "200")
 	@ApiResponse(content = @Content(schema = @Schema(defaultValue = "")), responseCode = "401", description = "Unauthorized")
 	public final ResponseEntity<Object> getCurrentUserSubjects() {
+		// the complete subjects list
+		final List<SubjectDtoWithSubscribeOrNot> subjectsDtoCompleteList = ((Collection<Subject>) subjectService
+				.getAllSubjects()).stream().map(subject -> convertSubjectToSubscribeDto(subject, false))
+				.collect(Collectors.toList());
+		// the user subjects list
 		final String mail = SecurityContextHolder.getContext().getAuthentication().getName();
 		final Optional<Users> user = userService.findByEmail(mail);
 		if (user.isEmpty())
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new HashMap<>());
-		final List<SubjectDto> subjectsDtoList = ((Set<Subject>) user.get().getSubjects()).stream()
-				.map(this::convertSubjectToDto).collect(Collectors.toList());
-		final HashMap<String, List<SubjectDto>> map = new HashMap<>();
-		map.put("subjects", subjectsDtoList);
+		final List<SubjectDtoWithSubscribeOrNot> userSubjectsDtoList = ((Set<Subject>) user.get().getSubjects())
+				.stream().map(subject -> convertSubjectToSubscribeDto(subject, true)).collect(Collectors.toList());
+		// merge
+		userSubjectsDtoList.addAll(subjectsDtoCompleteList.stream()
+				.filter(obj -> userSubjectsDtoList.stream().noneMatch(o -> o.getId() == obj.getId()))
+				.collect(Collectors.toList()));
+		// order by topic
+		userSubjectsDtoList
+				.sort(Comparator.comparing(SubjectDtoWithSubscribeOrNot::getTopic, String.CASE_INSENSITIVE_ORDER));
+		final HashMap<String, List<SubjectDtoWithSubscribeOrNot>> map = new HashMap<>();
+		map.put("subjects", userSubjectsDtoList);
 		return ResponseEntity.ok().body(map);
 	}
 

@@ -162,7 +162,7 @@
 					"response": []
 				},
 				{
-					"name": "find subjects subscribed for current user",
+					"name": "find subjects subscribed or not for current user",
 					"request": {
 						"method": "GET",
 						"header": [],
