@@ -1,6 +1,7 @@
 package fr.soft64.mddapi.controller;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -22,9 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import fr.soft64.mddapi.dto.CommentDto;
 import fr.soft64.mddapi.dto.PostCommentMiniDto;
-import fr.soft64.mddapi.dto.PostCommentsDto;
+import fr.soft64.mddapi.dto.PostCompleteCommentsDto;
 import fr.soft64.mddapi.dto.PostCreateMiniDto;
 import fr.soft64.mddapi.dto.PostDto;
+import fr.soft64.mddapi.dto.PostDtoTxtSubject;
 import fr.soft64.mddapi.model.Comment;
 import fr.soft64.mddapi.model.Post;
 import fr.soft64.mddapi.model.Subject;
@@ -80,6 +82,18 @@ public class PostController {
 		return postDto;
 	}
 
+	private PostDtoTxtSubject convertPostToDtoTxtSubject(Post post) {
+		PostDtoTxtSubject postDtoTxtSubject = new PostDtoTxtSubject();
+		postDtoTxtSubject.setId(post.getId());
+		postDtoTxtSubject.setSubject(post.getSubject().getTopic());
+		postDtoTxtSubject.setSubject_id(post.getSubject().getId());
+		postDtoTxtSubject.setTitle(post.getTitle());
+		postDtoTxtSubject.setContent(post.getContent());
+		postDtoTxtSubject.setUsername(post.getUser().getUsername());
+		postDtoTxtSubject.setCreated_at(post.getCreated_at());
+		return postDtoTxtSubject;
+	}
+
 	private CommentDto convertCommentToDto(Comment comment) {
 		CommentDto commentDto = new CommentDto();
 		commentDto.setId(comment.getId());
@@ -90,13 +104,14 @@ public class PostController {
 		return commentDto;
 	}
 
-	private PostCommentsDto convertPostCommentsToDto(Post post) {
-		PostCommentsDto postCommentsDto = new PostCommentsDto();
-		postCommentsDto.setPostId(post.getId());
+	private PostCompleteCommentsDto convertPostCompleteCommentsToDto(Post post, PostDtoTxtSubject postDto) {
+		PostCompleteCommentsDto postCompleteCommentsDto = new PostCompleteCommentsDto();
+		postCompleteCommentsDto.setPost(postDto);
 		final List<CommentDto> postsDtoList = ((Collection<Comment>) post.getComments()).stream()
 				.map(this::convertCommentToDto).collect(Collectors.toList());
-		postCommentsDto.setComments(postsDtoList);
-		return postCommentsDto;
+		postsDtoList.sort(Comparator.comparing(CommentDto::getCreated_at).reversed());
+		postCompleteCommentsDto.setComments(postsDtoList);
+		return postCompleteCommentsDto;
 	}
 
 	/**
@@ -140,22 +155,27 @@ public class PostController {
 	}
 
 	/**
-	 * Get all comments for a post by id
+	 * Get all comments for a post by id (post is include)
 	 * 
 	 * @param id post id
 	 * @return The HTTP response
 	 */
 	@GetMapping("/{postId}/comments")
-	@Operation(description = "Get all comments for a post by id")
-	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\"postId\":1,\"comments\":[{\"id\":1,\"username\":\"Toto\",\"postId\":1,\"created_at\":\"2023-01-30T19:44:28+01:00\",\"comment\":\"Comment1\"},{\"id\":2,\"username\":\"Toto\",\"postId\":1,\"created_at\":\"2023-01-30T19:44:28+01:00\",\"comment\":\"Comment2\"}]}")), responseCode = "200")
+	@Operation(description = "Get all comments for a post by id (post is include)")
+	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\"comments\":[{\"id\":2,\"username\":\"Toto\",\"postId\":1,\"comment\":\"comment2\",\"created_at\":\"2023-04-21T13:47:09+02:00\"},{\"id\":1,\"username\":\"Toto\",\"postId\":1,\"comment\":\"comment1\",\"created_at\":\"2023-04-20T13:47:09+02:00\"}],\"post\":{\"id\":1,\"subject_id\":1,\"subject\":\"Java\",\"username\":\"Toto2\",\"title\":\"Title3\",\"content\":\"Content3\",\"created_at\":\"2023-04-20T13:47:09+02:00\"}}")), responseCode = "200")
 	@ApiResponse(content = @Content(schema = @Schema(defaultValue = "")), responseCode = "401", description = "Unauthorized")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
 			+ "  \"message\": \"Post not found\"\r\n" + "}")), responseCode = "404", description = "Not Found")
 	public final ResponseEntity<Object> getPostComments(
 			@Parameter(description = "The post ID to get their comments") @PathVariable("postId") Long id) {
 		try {
-			final PostCommentsDto postCommentsDto = convertPostCommentsToDto(postService.findPostById(id).get());
-			return ResponseEntity.ok().body(postCommentsDto);
+			// get the post
+			final Post post = postService.findPostById(id).get();
+			final PostDtoTxtSubject postDtoTxtSubject = convertPostToDtoTxtSubject(post);
+			// get the post's comments
+			final PostCompleteCommentsDto postCompleteCommentsDto = convertPostCompleteCommentsToDto(post,
+					postDtoTxtSubject);
+			return ResponseEntity.ok().body(postCompleteCommentsDto);
 		} catch (NoSuchElementException ex) {
 			final HashMap<String, String> map = new HashMap<>();
 			map.put("message", "Post not found");
