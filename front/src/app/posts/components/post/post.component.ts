@@ -11,7 +11,7 @@ import { PostService } from 'src/app/core/services/post.service';
 export class PostComponent implements OnInit {
   @Input() post!: PostCard;
 
-  constructor(private postService: PostService, private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 

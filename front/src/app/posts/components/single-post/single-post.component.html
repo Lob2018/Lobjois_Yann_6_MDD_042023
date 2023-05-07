@@ -1,1 +1,25 @@
-<p>single-post works!</p>
+<ng-container *ngIf="post$ | async as post; else loadingComments">
+  <section>
+    <h2>{{ post[0].title | uppercase }}</h2>
+    <p>
+      <span>{{ post[0].created_at | date : "d MMMM yyyy" }}</span>
+      <span>{{ post[0].username }}</span>
+      <span>{{ post[0].subject }}</span>
+    </p>
+    <p>{{ post[0].content }}</p>
+    <div>
+      <p>Commentaires</p>
+      <ul *ngIf="post[1].length">
+        <li *ngFor="let post of post[1]">
+          {{ post.username }}-{{ post.comment }}
+        </li>
+      </ul>
+      <p *ngIf="!post[1].length">
+        <span>No comment available</span>
+      </p>
+    </div>
+  </section>
+</ng-container>
+<ng-template #loadingComments>
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</ng-template>

@@ -313,7 +313,7 @@
 					"response": []
 				},
 				{
-					"name": "find comments by post id",
+					"name": "find post and its comments by post id",
 					"request": {
 						"method": "GET",
 						"header": [],
