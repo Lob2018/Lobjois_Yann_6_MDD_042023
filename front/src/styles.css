@@ -20,3 +20,6 @@ button.yl-button-image-accessibility {
 button.yl-button-image-accessibility img {
   margin: 0;
 }
+mat-progress-spinner{
+  margin: 1.3rem auto;
+}

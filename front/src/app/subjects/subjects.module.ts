@@ -5,8 +5,13 @@ import { SubjectListComponent } from './components/subject-list/subject-list.com
 import { SubjectsRoutingModule } from './subjects-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
 
-const materialModules = [MatButtonModule, MatProgressSpinnerModule];
+const materialModules = [
+  MatButtonModule,
+  MatProgressSpinnerModule,
+  MatCardModule,
+];
 
 @NgModule({
   declarations: [SubjectComponent, SubjectListComponent],

@@ -1,4 +1,22 @@
-<h2>{{ subject.topic | uppercase }}</h2>
-<p>{{ subject.id }}</p>
-<p>{{ subject.description }}</p>
-<p>{{ subject.subscribe }}</p>
+<mat-card>
+  <mat-card-title>{{ subject.topic }}</mat-card-title>
+  <mat-card-content>
+    <p>{{ subject.description }}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      class="button-create"
+      mat-raised-button
+      color="primary"
+      (click)="subscribeSubject()"
+      [attr.aria-label]="
+        'Subscribe to ' +
+        subject.topic +
+        ' - description ' +
+        subject.description
+      "
+    >
+      S'abonner
+    </button>
+  </mat-card-actions>
+</mat-card>

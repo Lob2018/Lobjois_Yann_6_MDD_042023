@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostCard } from 'src/app/core/models/post/postCard.interface';
-import { PostService } from 'src/app/core/services/post.service';
 
 @Component({
   selector: 'app-post',

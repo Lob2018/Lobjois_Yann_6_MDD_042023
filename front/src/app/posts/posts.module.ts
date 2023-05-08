@@ -8,8 +8,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PostsRoutingModule } from './posts-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatCardModule} from '@angular/material/card';
 
-const materialModules = [MatButtonModule, MatProgressSpinnerModule];
+const materialModules = [MatButtonModule, MatProgressSpinnerModule,MatCardModule];
 
 @NgModule({
   declarations: [

@@ -1,14 +1,19 @@
-<ng-container *ngIf="subjects$ | async as data; else loading">
-  <section *ngIf="data.length">
-    <div *ngFor="let subject of data">
-      <app-subject [subject]="subject" *ngIf="!subject.subscribe">
-      </app-subject>
+<section>
+  <ng-container *ngIf="subjects$ | async as data; else loading">
+    <div class="list-subject" *ngIf="data.length">
+      <div *ngFor="let subject of data">
+        <app-subject
+          (subscribeBubbleUp)="onSubscribe($event)"
+          [subject]="subject"
+        >
+        </app-subject>
+      </div>
     </div>
-  </section>
-  <section *ngIf="!data.length">
-    <p>No subjects to subscribe</p>
-  </section>
-</ng-container>
-<ng-template #loading>
-  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-</ng-template>
+    <div class="list-subject" *ngIf="!data.length">
+      <p>No subjects to subscribe</p>
+    </div>
+  </ng-container>
+  <ng-template #loading>
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </ng-template>
+</section>

@@ -1,7 +1,18 @@
-<div  (click)="onViewPost()">
-    <h2>{{ post.title | uppercase }}</h2>
-    <p>{{ post.id}}</p>
-    <p>{{ post.username}}</p>    
-    <p>{{ post.content}}</p>
-    <p>{{ post.created_at | date: "d MMMM yyyy"}}</p>
-  </div>
+<button
+  (click)="onViewPost()"
+  mat-card
+  matRipple
+  color="primary"
+  [attr.aria-label]="(post.created_at | date:'shortDate') + ' - ' + post.title"
+  role="button"
+  tabindex="0"
+>
+  <mat-card-title>{{ post.title }}</mat-card-title>
+  <mat-card-subtitle>
+    <span class="post-date">{{ post.created_at | date : "dd-MM-YY" }} </span>
+    <span> {{ post.username }}</span>
+  </mat-card-subtitle>
+  <mat-card-content>
+    <p>{{ post.content }}</p>
+  </mat-card-content>
+</button>
