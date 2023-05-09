@@ -5,18 +5,35 @@
   </mat-card-content>
   <mat-card-actions>
     <button
+      [style]="
+        subject.subscribe
+          ? isDesktop
+            ? { width: '10.44rem' }
+            : { width: '10.25rem' }
+          : isDesktop
+          ? { width: '10.44rem' }
+          : { width: '8.69rem' }
+      "
       class="button-create"
       mat-raised-button
       color="primary"
       (click)="subscribeSubject()"
       [attr.aria-label]="
-        'Subscribe to ' +
-        subject.topic +
-        ' - description ' +
-        subject.description
+        subject.subscribe
+          ? 'Unsubscribe to ' +
+            subject.topic +
+            ' - description ' +
+            subject.description
+          : 'Subscribe to ' +
+            subject.topic +
+            ' - description ' +
+            subject.description
       "
     >
-      S'abonner
+      <ng-container *ngIf="subject.subscribe; else notSubscribed">
+        Se désabonner
+      </ng-container>
+      <ng-template #notSubscribed>S'abonner </ng-template>
     </button>
   </mat-card-actions>
 </mat-card>

@@ -24,4 +24,10 @@ export class SubjectService {
       null
     );
   }
+
+  unsubscribeSubject(subjectId: number): Observable<MessageResponse> {
+    return this.http.delete<MessageResponse>(
+      this.pathService + `subject/${subjectId}/user`
+    );
+  }
 }

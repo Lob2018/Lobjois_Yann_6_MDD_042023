@@ -43,7 +43,7 @@ mat-card mat-card-actions {
 }
 mat-card mat-card-actions button{
    height: 40px;
-   width: 166.97px;
+   /* width: 166.97px; */
    font-size: 1rem;
    font-weight: 700;
   }
@@ -59,7 +59,7 @@ mat-card mat-card-actions button{
     height: 1.63rem;
   }
   mat-card mat-card-actions button{   
-    width: 139px;   
+    /* width: 139px;    */
    }
    mat-card mat-card-content {
     -webkit-line-clamp: 4;
