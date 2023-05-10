@@ -1,23 +1,57 @@
 <ng-container *ngIf="post$ | async as post; else loadingComments">
   <section>
-    <h2>{{ post[0].title | uppercase }}</h2>
-    <p>
+    <button
+      class="yl-button-image-accessibility button-go-back"
+      aria-label="Return to previous page"
+      (click)="goBack()"
+    >
+      <img src="/assets/pictures/arrow_left.png" alt="Return" />
+    </button>
+    <h1>{{ post[0].title | uppercase }}</h1>
+    <p class="subtitle">
       <span>{{ post[0].created_at | date : "d MMMM yyyy" }}</span>
       <span>{{ post[0].username }}</span>
       <span>{{ post[0].subject }}</span>
     </p>
-    <p>{{ post[0].content }}</p>
-    <div>
-      <p>Commentaires</p>
-      <ul *ngIf="post[1].length">
-        <li *ngFor="let post of post[1]">
-          {{ post.username }}-{{ post.comment }}
-        </li>
-      </ul>
-      <p *ngIf="!post[1].length">
-        <span>No comment available</span>
-      </p>
+    <p class="content">{{ post[0].content }}</p>
+    <mat-divider></mat-divider>
+
+    <p class="title-comment">Commentaires</p>
+
+    <div *ngIf="post[1].length">
+      <app-comment
+        *ngFor="let comment of post[1]"
+        [comment]="comment"
+      ></app-comment>
     </div>
+    <p *ngIf="!post[1].length">
+      <span class="no-comment">No comment available</span>
+    </p>
+    <form class="comment-form" [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field class="input-first" appearance="outline">
+        <textarea
+          matInput
+          placeholder="Écrivez ici votre commentaire"
+          formControlName="comment"
+        ></textarea>
+      </mat-form-field>
+      <button
+        class="yl-button-image-accessibility button-submit"
+        aria-label="Send comment"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        <img
+          [src]="
+            form.invalid
+              ? '/assets/pictures/send_disabled.png'
+              : '/assets/pictures/send_.png'
+          "
+          [alt]="form.invalid ? 'Type a comment to send it' : 'Send comment'"
+        />
+      </button>
+      <p *ngIf="onError" class="error">An error occurred</p>
+    </form>
   </section>
 </ng-container>
 <ng-template #loadingComments>

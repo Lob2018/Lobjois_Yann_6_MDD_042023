@@ -8,8 +8,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -271,7 +269,7 @@ public class SubjectController {
 	@DeleteMapping("/{subjectId}/user")
 	@Operation(description = "User no longer subscribe to a subject")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
-			+ "  \"message\": \"User no longer subscribed !\"\r\n" + "}")), responseCode = "200")
+			+ "  \"message\": \"User no longer subscribe !\"\r\n" + "}")), responseCode = "200")
 	@ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(type = "object", defaultValue = "{\r\n"
 			+ "  \"message\": \"Error during unsubscribe process\"\r\n"
 			+ "}")), responseCode = "400", description = "Bad Request")

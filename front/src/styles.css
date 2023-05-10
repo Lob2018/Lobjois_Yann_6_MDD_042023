@@ -12,6 +12,7 @@ body {
   border: 1px solid black;
 }
 button.yl-button-image-accessibility {
+  cursor: pointer;
   border: none;
   padding: 0;
   background-color: inherit;
@@ -22,4 +23,7 @@ button.yl-button-image-accessibility img {
 }
 mat-progress-spinner{
   margin: 1.3rem auto;
+}
+.multiline-snackbar {
+  white-space: pre-line;
 }

@@ -4,6 +4,7 @@ import {
   Breakpoints,
 } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, catchError, map, take } from 'rxjs';
 import { SubjectCard } from 'src/app/core/models/subject/subjectCard.interface';
 import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
@@ -21,7 +22,8 @@ export class SubjectListComponent implements OnInit {
   constructor(
     private subjectService: SubjectService,
     private errorHandler: ErrorHandlerService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -52,9 +54,10 @@ export class SubjectListComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (response) => {
-          if (response.message == 'User subscribed !') {
-            this.refresh();
-          }
+          this.refresh();
+          this._snackBar.open(response.message, '', {
+            duration: 3000,
+          });
           return response;
         },
         error: (error) => {

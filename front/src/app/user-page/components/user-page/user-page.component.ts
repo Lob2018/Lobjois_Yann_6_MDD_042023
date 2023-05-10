@@ -5,13 +5,13 @@ import {
 } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable, catchError, map, of, take, tap } from 'rxjs';
 import { RegisterRequest } from 'src/app/core/models/auth/registerRequest.interface';
-import { TokenResponse } from 'src/app/core/models/auth/tokenResponse.interface';
 import { SubjectCard } from 'src/app/core/models/subject/subjectCard.interface';
 import { UserGetResponse } from 'src/app/core/models/user/userGetResponse.interface';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { UserPutResponse } from 'src/app/core/models/user/userPutResponse.interface';
 import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { SubjectService } from 'src/app/core/services/subject.service';
@@ -48,19 +48,32 @@ export class UserPageComponent implements OnInit {
     private subjectService: SubjectService,
     private errorHandler: ErrorHandlerService,
     private breakpointObserver: BreakpointObserver,
-    private authService: AuthService,
     private fb: FormBuilder,
     private localStorageService: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {}
+
+  showSnackBarError(msg: string, duration: number) {
+    this._snackBar.open(msg, '', {
+      duration: duration,
+      panelClass: ['multiline-snackbar'],
+    });
+  }
 
   public submit(): void {
     const registerRequest = this.form.value as RegisterRequest;
     // service with errorHandler
-    this.authService.register(registerRequest).subscribe({
-      next: (response: TokenResponse) => {
+    this.userService.updateUser(registerRequest).subscribe({
+      next: (response: UserPutResponse) => {
         this.localStorageService.setToken(response.token);
-        // message
+        const msg =
+          'Your data have been updated :' +
+          '\n\nusername:' +
+          response.username +
+          '\nemail:' +
+          response.email;
+        this.showSnackBarError(msg, 7000);
       },
       error: (error) => this.errorHandler.handleError(error),
     });
@@ -99,7 +112,8 @@ export class UserPageComponent implements OnInit {
   }
   disconnect() {
     this.localStorageService.removeToken();
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/']);
+    this.showSnackBarError('You have been successfully logged out', 3000);
   }
   onUnsubscribe(subscribeBubbleUp: number) {
     this.subjectService
@@ -107,9 +121,8 @@ export class UserPageComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (response) => {
-          if (response.message == 'User no longer subscribe !') {
-            this.refresh();
-          }
+          this.refresh();
+          this.showSnackBarError(response.message, 3000);
           return response;
         },
         error: (error) => {

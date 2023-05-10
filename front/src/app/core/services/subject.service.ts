@@ -10,23 +10,23 @@ import { MessageResponse } from '../models/message/messageResponse.interface';
 export class SubjectService {
   private pathService = 'http://localhost:8080/api/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private httpClient: HttpClient) {}
 
   getSubjects(): Observable<SubjectCard[]> {
-    return this.http
+    return this.httpClient
       .get<{ subjects: SubjectCard[] }>(this.pathService + 'subject/user')
       .pipe(map((json) => json.subjects));
   }
 
   subscribeSubject(subjectId: number): Observable<MessageResponse> {
-    return this.http.post<MessageResponse>(
+    return this.httpClient.post<MessageResponse>(
       this.pathService + `subject/${subjectId}/user`,
       null
     );
   }
 
   unsubscribeSubject(subjectId: number): Observable<MessageResponse> {
-    return this.http.delete<MessageResponse>(
+    return this.httpClient.delete<MessageResponse>(
       this.pathService + `subject/${subjectId}/user`
     );
   }

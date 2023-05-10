@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [HeaderComponent, HeaderMenuDialogContent],
@@ -25,6 +26,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatIconModule,
     MatToolbarModule,
     MatDialogModule,
+    MatSnackBarModule,
   ],
   exports: [HeaderComponent],
   providers: [

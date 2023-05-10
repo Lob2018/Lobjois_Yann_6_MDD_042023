@@ -11,16 +11,16 @@ import { PostSingle } from '../models/post/postSingle.interface';
 export class PostService {
   private pathService = 'http://localhost:8080/api/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private httpClient: HttpClient) {}
 
   getMyPosts(): Observable<PostCard[]> {
-    return this.http
+    return this.httpClient
       .get<{ posts: PostCard[] }>(this.pathService + 'subject/user/posts')
       .pipe(map((json) => json.posts));
   }
 
   getPostWithComments(postId: number): Observable<[PostSingle, PostComment[]]> {
-    return this.http
+    return this.httpClient
       .get<{ comments: PostComment[]; post: PostSingle }>(
         this.pathService + `post/${postId}/comments`
       )
