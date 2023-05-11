@@ -1,13 +1,13 @@
-<section>
+<section class="container-create-article">
   <button
-  class="yl-button-image-accessibility button-go-back"
-  aria-label="Return to previous page"
-  (click)="goBack()"
->
-  <img src="/assets/pictures/arrow_left.png" alt="Return" />
-</button>
+    class="yl-button-image-accessibility button-go-back"
+    aria-label="Return to previous page"
+    (click)="goBack()"
+  >
+    <img src="/assets/pictures/arrow_left.png" alt="Return" />
+  </button>
   <h1>Créer un nouvel article</h1>
-  <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+  <form class="create-form" [formGroup]="form" (ngSubmit)="submit()">
     <mat-form-field appearance="outline">
       <mat-select formControlName="subject_id" class="custom-select">
         <mat-option [value]="0" disabled>Sélectionnez un thème</mat-option>

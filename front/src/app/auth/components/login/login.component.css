@@ -15,26 +15,26 @@ button.yl-button-image-accessibility {
   padding-top: 47px;
   width: 15.6rem;
 }
-.button-last {
+.login-form .button-last {
   margin-bottom: 80px;
 }
 .login-form legend {
   font-size: 1.5rem;
   margin-bottom: 2.7rem;
 }
-mat-form-field {
+.login-form mat-form-field {
   width: 15.6rem;
 }
-.custom-label {
+.login-form .custom-label {
   font-size: 16px;
   color: black;
 }
-.login-form button {
+.login-form .login-form button {
   margin-top: 0.47rem;
   height: 40px;
   width: 139px;
 }
-.input-first {
+.login-form .input-first {
   margin-bottom: -0.5px;
 }
 
@@ -47,7 +47,7 @@ mat-form-field {
     padding-top: 0px;
     margin: 0 auto;
   }
-  .button-last {
+  .login-form .button-last {
     margin-bottom: 70px;
   }
   .form-logo {
@@ -57,11 +57,11 @@ mat-form-field {
     width: 100%;
     object-fit: contain;
   }
-  .login-form legend {
+  .login-form .login-form legend {
     margin-top: -3px;
     margin-bottom: 2.95rem;
   }
-  .login-form button {
+  .login-form .login-form button {
     margin-top: 0.87rem;
   }
 }

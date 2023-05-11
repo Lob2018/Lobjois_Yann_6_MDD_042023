@@ -1,11 +1,11 @@
-button.button-go-back {
+.container-create-article button.button-go-back {
   position: absolute;
   max-height: 23px;
   margin-top: 5px;
   margin-left: 22px;
 }
 
-h1 {
+.container-create-article h1 {
   font-size: 24px;
   font-weight: 700;
   line-height: 29px;
@@ -14,7 +14,7 @@ h1 {
   margin: 26px 0 31px 0;
 }
 /* form */
-.login-form {
+.create-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,46 +22,49 @@ h1 {
   width: 17.56rem;
 }
 
-mat-form-field {
+.create-form mat-form-field {
   width: 17.56rem;
   font-size: 20px;
 }
 
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+.create-form
+  ::ng-deep
+  .mat-form-field-appearance-outline
+  .mat-form-field-infix {
   padding: 0.05rem 0 0.55rem 0;
 }
 
-::ng-deep .mat-form-field-wrapper {
+.create-form ::ng-deep .mat-form-field-wrapper {
   padding-bottom: 0.5rem;
 }
 
-.login-form button.button-last {
+.create-form button.button-last {
   margin: 30px 0 31px 0;
   height: 40px;
   width: 139px;
 }
 
-textarea {
+.create-form textarea {
   height: 186px;
 }
 
 @media only screen and (max-width: 599.98px) {
-  button.button-go-back {
+  .container-create-article button.button-go-back {
     top: 91px;
     margin-left: 14px;
   }
-  h1 {
+  .container-create-article h1 {
     margin: 84px 0 10px 0;
   }
-  .login-form {
+  .create-form {
     width: 15.625rem;
     padding-top: 0px;
     margin: 0 auto;
   }
-  mat-form-field {
+  .create-form mat-form-field {
     width: 15.625rem;
   }
-  .login-form .buttonbutton-last {
+  .create-form .buttonbutton-last {
     margin: 25px 0 23px 0;
   }
 }
