@@ -7,6 +7,7 @@ import { ErrorHandlerService } from 'src/app/core/services/error-handler.service
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { Location } from '@angular/common';
 import { RegisterRequest } from 'src/app/core/models/auth/registerRequest.interface';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -42,7 +43,7 @@ export class RegisterComponent {
 
   public submit(): void {
     const registerRequest = this.form.value as RegisterRequest;
-    this.authService.register(registerRequest).subscribe({
+    this.authService.register(registerRequest).pipe(take(1)).subscribe({
       next: (response: TokenResponse) => {
         this.localStorageService.setToken(response.token);
         this.router.navigate(['/posts']);

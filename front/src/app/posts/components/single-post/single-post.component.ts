@@ -7,6 +7,10 @@ import { ErrorHandlerService } from 'src/app/core/services/error-handler.service
 import { PostService } from 'src/app/core/services/post.service';
 import { Location } from '@angular/common';
 import { FormBuilder, Validators } from '@angular/forms';
+import { PostCommentRequest } from 'src/app/core/models/post/postCommentRequest';
+import { PostCommentResponse } from 'src/app/core/models/post/postCommentResponse';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-single-post',
@@ -27,10 +31,22 @@ export class SinglePostComponent implements OnInit {
     private errorHandler: ErrorHandlerService,
     private router: Router,
     private location: Location,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
+    this.refresh();
+  }
+
+  showSnackBarError(msg: string, duration: number) {
+    this._snackBar.open(msg, '', {
+      duration: duration,
+      panelClass: ['multiline-snackbar'],
+    });
+  }
+
+  refresh() {
     const postId = +this.route.snapshot.params['id'];
     this.post$ = this.postService.getPostWithComments(postId).pipe(
       catchError((error) => {
@@ -41,15 +57,21 @@ export class SinglePostComponent implements OnInit {
   }
 
   public submit(): void {
-    console.log('send')
-    // const loginRequest = this.form.value as LoginRequest;
-    // this.authService.login(loginRequest).subscribe({
-    //   next: (response: TokenResponse) => {
-    //     this.localStorageService.setToken(response.token);
-    //     this.router.navigate(['/posts']);
-    //   },
-    //   error: (error) => this.errorHandler.handleError(error),
-    // });
+    const postId = +this.route.snapshot.params['id'];
+    const postCommentRequest = this.form.value as PostCommentRequest;
+    // service with errorHandler
+    this.postService
+      .postComment(postId, postCommentRequest)
+      .pipe(take(1))
+      .subscribe({
+        next: (response: PostCommentResponse) => {
+          const msg = 'Your comment has been published';
+          this.refresh();
+          this.showSnackBarError(msg, 2000);
+          return response;
+        },
+        error: (error) => this.errorHandler.handleError(error),
+      });
   }
 
   /**

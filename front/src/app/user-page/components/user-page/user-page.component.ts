@@ -64,19 +64,22 @@ export class UserPageComponent implements OnInit {
   public submit(): void {
     const registerRequest = this.form.value as RegisterRequest;
     // service with errorHandler
-    this.userService.updateUser(registerRequest).subscribe({
-      next: (response: UserPutResponse) => {
-        this.localStorageService.setToken(response.token);
-        const msg =
-          'Your data have been updated :' +
-          '\n\nusername:' +
-          response.username +
-          '\nemail:' +
-          response.email;
-        this.showSnackBarError(msg, 7000);
-      },
-      error: (error) => this.errorHandler.handleError(error),
-    });
+    this.userService
+      .updateUser(registerRequest)
+      .pipe(take(1))
+      .subscribe({
+        next: (response: UserPutResponse) => {
+          this.localStorageService.setToken(response.token);
+          const msg =
+            'Your data have been updated :' +
+            '\n\nusername:' +
+            response.username +
+            '\nemail:' +
+            response.email;
+          this.showSnackBarError(msg, 7000);
+        },
+        error: (error) => this.errorHandler.handleError(error),
+      });
   }
   ngOnInit(): void {
     this.breakpointObserver
