@@ -7,7 +7,6 @@
 .comment-username {
   flex-basis: 25%;
   min-width: 25%;
-  line-break: anywhere;
 }
 .container-comment-content {
   box-sizing: border-box;
@@ -22,6 +21,7 @@
   line-height: 24px;
   margin: 0;
   padding: 0;
+  line-break: anywhere;
 }
 
 @media only screen and (max-width: 599.98px) {
