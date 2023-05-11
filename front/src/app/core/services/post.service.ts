@@ -4,8 +4,9 @@ import { PostCard } from '../models/post/postCard.interface';
 import { HttpClient } from '@angular/common/http';
 import { PostComment } from '../models/post/postComment.interface';
 import { PostSingle } from '../models/post/postSingle.interface';
-import { PostCommentResponse } from '../models/post/postCommentResponse';
-import { PostCommentRequest } from '../models/post/postCommentRequest';
+import { PostCommentResponse } from '../models/post/postCommentResponse.interface';
+import { PostCommentRequest } from '../models/post/postCommentRequest.interface';
+import { PostSingleRequest } from '../models/post/postSingleRequest.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -37,5 +38,9 @@ export class PostService {
       this.pathService + `post/${postId}/comment`,
       comment
     );
+  }
+
+  postPost(post: PostSingleRequest): Observable<PostSingle> {
+    return this.httpClient.post<PostSingle>(this.pathService + `post`, post);
   }
 }

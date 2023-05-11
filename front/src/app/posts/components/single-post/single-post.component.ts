@@ -7,8 +7,8 @@ import { ErrorHandlerService } from 'src/app/core/services/error-handler.service
 import { PostService } from 'src/app/core/services/post.service';
 import { Location } from '@angular/common';
 import { FormBuilder, Validators } from '@angular/forms';
-import { PostCommentRequest } from 'src/app/core/models/post/postCommentRequest';
-import { PostCommentResponse } from 'src/app/core/models/post/postCommentResponse';
+import { PostCommentRequest } from 'src/app/core/models/post/postCommentRequest.interface';
+import { PostCommentResponse } from 'src/app/core/models/post/postCommentResponse.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { take } from 'rxjs/operators';
 
@@ -19,10 +19,13 @@ import { take } from 'rxjs/operators';
 })
 export class SinglePostComponent implements OnInit {
   post$!: Observable<[PostSingle, PostComment[]]>;
+  // \s matches any whitespace character (equivalent to [\r\n\t\f\v ])
+  // \S matches any non-whitespace character (equivalent to [^\r\n\t\f\v ])
+  public postPattern = /^(?!\s*$)[\s\S]{1,1999}$/;
   public onError = false;
 
   public form = this.fb.group({
-    comment: ['', [Validators.required, Validators.minLength(1)]],
+    comment: ['', [Validators.required, Validators.pattern(this.postPattern)]],
   });
 
   constructor(
@@ -68,6 +71,7 @@ export class SinglePostComponent implements OnInit {
           const msg = 'Your comment has been published';
           this.refresh();
           this.showSnackBarError(msg, 2000);
+          this.form.reset();
           return response;
         },
         error: (error) => this.errorHandler.handleError(error),

@@ -1,1 +1,46 @@
-<p>new-post works!</p>
+<section>
+  <button
+  class="yl-button-image-accessibility button-go-back"
+  aria-label="Return to previous page"
+  (click)="goBack()"
+>
+  <img src="/assets/pictures/arrow_left.png" alt="Return" />
+</button>
+  <h1>Créer un nouvel article</h1>
+  <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline">
+      <mat-select formControlName="subject_id" class="custom-select">
+        <mat-option [value]="0" disabled>Sélectionnez un thème</mat-option>
+        <mat-option
+          *ngFor="let subject of subjects$ | async"
+          [value]="subject.id"
+          >{{ subject.topic }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        formControlName="title"
+        placeholder="Titre de l'article"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <textarea
+        matInput
+        formControlName="content"
+        placeholder="Contenu de l'article"
+      ></textarea>
+    </mat-form-field>
+    <button
+      class="button-last"
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      Créer
+    </button>
+    <p *ngIf="onError" class="error">An error occurred</p>
+  </form>
+</section>

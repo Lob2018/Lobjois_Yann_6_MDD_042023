@@ -40,7 +40,7 @@ export class SubjectListComponent implements OnInit {
   }
 
   refresh() {
-    this.subjects$ = this.subjectService.getSubjects().pipe(
+    this.subjects$ = this.subjectService.getUserSubjects().pipe(
       map((subjects) => subjects.filter((subject) => !subject.subscribe)),
       catchError((error) => {
         return this.errorHandler.handleError(error);

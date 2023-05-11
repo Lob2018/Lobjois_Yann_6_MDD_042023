@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { SubjectCard } from '../models/subject/subjectCard.interface';
 import { MessageResponse } from '../models/message/messageResponse.interface';
+import { SubjectsResponse } from '../models/subject/subjectsResponse.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,13 @@ export class SubjectService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getSubjects(): Observable<SubjectCard[]> {
+  getSubjects(): Observable<SubjectsResponse[]> {
+    return this.httpClient
+      .get<{ subjects: SubjectsResponse[] }>(this.pathService + 'subject')
+      .pipe(map((json) => json.subjects));
+  }
+
+  getUserSubjects(): Observable<SubjectCard[]> {
     return this.httpClient
       .get<{ subjects: SubjectCard[] }>(this.pathService + 'subject/user')
       .pipe(map((json) => json.subjects));

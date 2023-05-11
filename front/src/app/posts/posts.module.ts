@@ -15,6 +15,7 @@ import { CommentComponent } from './components/comment/comment.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 const materialModules = [
   MatButtonModule,
@@ -25,6 +26,7 @@ const materialModules = [
   MatIconModule,
   MatSnackBarModule,
   MatDividerModule,
+  MatSelectModule,
 ];
 
 @NgModule({
