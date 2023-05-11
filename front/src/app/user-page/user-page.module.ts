@@ -9,17 +9,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const materialModules = [
   MatButtonModule,
   MatProgressSpinnerModule,
   MatDividerModule,
-  MatSnackBarModule,
-  MatCardModule,
-  MatFormFieldModule,
   MatIconModule,
   MatInputModule,
 ];

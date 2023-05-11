@@ -6,13 +6,11 @@ import { SubjectsRoutingModule } from './subjects-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const materialModules = [
   MatButtonModule,
   MatProgressSpinnerModule,
   MatCardModule,
-  MatSnackBarModule,
 ];
 
 @NgModule({
