@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { Location } from '@angular/common';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -37,13 +38,16 @@ export class LoginComponent {
 
   public submit(): void {
     const loginRequest = this.form.value as LoginRequest;
-    this.authService.login(loginRequest).subscribe({
-      next: (response: TokenResponse) => {
-        this.localStorageService.setToken(response.token);
-        this.router.navigate(['/posts']);
-      },
-      error: (error) => this.errorHandler.handleError(error),
-    });
+    this.authService
+      .login(loginRequest)
+      .pipe(take(1))
+      .subscribe({
+        next: (response: TokenResponse) => {
+          this.localStorageService.setToken(response.token);
+          this.router.navigate(['/posts']);
+        },
+        error: (error) => this.errorHandler.handleError(error),
+      });
   }
 
   /**

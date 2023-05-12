@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 })
 export class HeaderComponent implements OnInit {
   isDesktop!: boolean;
+  private breakpointSubscription!: Subscription;
 
   constructor(
     private router: Router,
@@ -38,7 +40,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.breakpointObserver
+    this.breakpointSubscription = this.breakpointObserver
       .observe([Breakpoints.XSmall])
       .subscribe((result: BreakpointState) => {
         if (result.matches) {
@@ -63,6 +65,12 @@ export class HeaderComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  ngOnDestroy() {
+    if (this.breakpointSubscription) {
+      this.breakpointSubscription.unsubscribe();
+    }
   }
 }
 

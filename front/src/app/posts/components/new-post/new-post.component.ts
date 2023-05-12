@@ -71,7 +71,6 @@ export class NewPostComponent implements OnInit {
 
   ngOnInit(): void {
     this.subjects$ = this.subjectService.getSubjects().pipe(
-      take(1),
       catchError((error) => {
         return this.errorHandler.handleError(error);
       })

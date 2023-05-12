@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Observable, catchError, map, of, take, tap } from 'rxjs';
+import { Observable, Subscription, catchError, map, of, take, tap } from 'rxjs';
 import { RegisterRequest } from 'src/app/core/models/auth/registerRequest.interface';
 import { SubjectCard } from 'src/app/core/models/subject/subjectCard.interface';
 import { UserGetResponse } from 'src/app/core/models/user/userGetResponse.interface';
@@ -26,6 +26,7 @@ export class UserPageComponent implements OnInit {
   isDesktop!: boolean;
   subjects$!: Observable<SubjectCard[]>;
   user$!: Observable<UserGetResponse>;
+  private breakpointSubscription!: Subscription;
   public hide = true;
   public onError = false;
   public usernamePattern = /^[\w]{1,254}$/;
@@ -82,7 +83,7 @@ export class UserPageComponent implements OnInit {
       });
   }
   ngOnInit(): void {
-    this.breakpointObserver
+    this.breakpointSubscription = this.breakpointObserver
       .observe([Breakpoints.XSmall])
       .subscribe((result: BreakpointState) => {
         if (result.matches) {
@@ -132,5 +133,11 @@ export class UserPageComponent implements OnInit {
           return this.errorHandler.handleError(error);
         },
       });
+  }
+
+  ngOnDestroy() {
+    if (this.breakpointSubscription) {
+      this.breakpointSubscription.unsubscribe();
+    }
   }
 }

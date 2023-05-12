@@ -5,7 +5,7 @@ import {
 } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, catchError, map, take } from 'rxjs';
+import { Observable, Subscription, catchError, map, take } from 'rxjs';
 import { SubjectCard } from 'src/app/core/models/subject/subjectCard.interface';
 import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
 import { SubjectService } from 'src/app/core/services/subject.service';
@@ -18,6 +18,7 @@ import { SubjectService } from 'src/app/core/services/subject.service';
 export class SubjectListComponent implements OnInit {
   isDesktop!: boolean;
   subjects$!: Observable<SubjectCard[]>;
+  private breakpointSubscription!: Subscription;
 
   constructor(
     private subjectService: SubjectService,
@@ -27,7 +28,7 @@ export class SubjectListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.breakpointObserver
+    this.breakpointSubscription = this.breakpointObserver
       .observe([Breakpoints.XSmall])
       .subscribe((result: BreakpointState) => {
         if (result.matches) {
@@ -64,5 +65,11 @@ export class SubjectListComponent implements OnInit {
           return this.errorHandler.handleError(error);
         },
       });
+  }
+
+  ngOnDestroy() {
+    if (this.breakpointSubscription) {
+      this.breakpointSubscription.unsubscribe();
+    }
   }
 }
