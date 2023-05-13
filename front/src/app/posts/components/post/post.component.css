@@ -1,4 +1,4 @@
-button {
+button.button-post {
   display: flex;
   cursor: pointer;
   flex-direction: column;
@@ -11,7 +11,7 @@ button {
   padding: 12px 20px 14px 18px;
 }
 
-button mat-card-title {
+button.button-post mat-card-title {
   font-weight: 700;
   font-size: 1rem;
   text-overflow: ellipsis;
@@ -20,10 +20,10 @@ button mat-card-title {
   height: 2.19rem;
   width: 100%;
 }
-button mat-card-title::first-letter {
+button.button-post mat-card-title::first-letter {
   text-transform: capitalize;
 }
-button mat-card-subtitle {
+button.button-post mat-card-subtitle {
   font-size: 0.875;
   height: 2rem;
   text-overflow: ellipsis;
@@ -32,38 +32,43 @@ button mat-card-subtitle {
   color: black;
   width: 100%;
 }
-button mat-card-content {
+button.button-post mat-card-content {
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
   white-space: pre-wrap;
 }
-button mat-card-content p {
+button.button-post mat-card-content p {
   margin: 0;
 }
-button mat-card-subtitle span.post-date {
+button.button-post mat-card-subtitle span.post-date {
   display: inline-block;
   width: 43%;
 }
+.button-post .mat-card-actions,
+.button-post .mat-card-subtitle,
+.button-post .mat-card-content {
+  margin-bottom: 0;
+}
 
 @media only screen and (max-width: 599.98px) {
-  button {
+  button.button-post {
     max-width: 16.56rem;
     height: 8.25rem;
     text-align: left;
     padding: 8px 15px 10px 13px;
   }
-  button mat-card-title {
+  button.button-post mat-card-title {
     height: 1.6rem;
   }
-  button mat-card-subtitle {
+  button.button-post mat-card-subtitle {
     height: 1.5rem;
   }
-  button mat-card-subtitle span.post-date {
+  button.button-post mat-card-subtitle span.post-date {
     width: 42%;
   }
-  button mat-card-content {
+  button.button-post mat-card-content {
     -webkit-line-clamp: 4;
   }
 }

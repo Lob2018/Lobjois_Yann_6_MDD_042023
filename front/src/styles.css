@@ -27,3 +27,6 @@ mat-progress-spinner{
 .multiline-snackbar {
   white-space: pre-line;
 }
+.mat-card:not([class*="mat-elevation-z"]) {
+  box-shadow: none;
+}
